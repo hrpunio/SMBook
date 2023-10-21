@@ -2287,7 +2287,7 @@ Można ważyć i mierzyć wzrost, obliczyć BMI. Wada: koszt
 Można pytać się o postrzegane BMI. Jakie jest pani/pana BMI? Większość
 osób nie wie. W badaniach ankietowych zawsze musimy odpowiedzieć na
 pytanie czy ankietowany jest w stanie udzielić nam wiarygodnej
-odpowiedzi.  Jeżeli nie jest to nie ma sensu tak mierzyć
+odpowiedzi.  Jeżeli nie jest to nie ma sensu tak mierzyć.
 
 **Przykład: badanie stresu i wypalenia (przekonania)**
 
@@ -2299,11 +2299,787 @@ odpowiedzi.  Jeżeli nie jest to nie ma sensu tak mierzyć
 
 ## Przykład 1: test kompetencyjny
 
-@@
+```{r}
+s0 <- read.csv("palenie_PSW.csv", sep = ',',  header=F, skip=1, na.string="NA", fileEncoding = "UTF-8",
+   col.names = c('time', 
+   'status', 'palenie.staz', 
+   'palenie.rzucenie', 
+   'uzaleznienie', 
+   'P5',
+   'P6', 'P7', 'P8', 'P9', 'P10', 'P11', 'P12', 
+   'ocena.wiedzy', 'wzorce.palenia', 'plec', 'wiek', 'staz', 'miejsce.pracy'))
 
-## Przykład 2: stres a wypalenie
+s1 <- s0 %>%
+   mutate(
+staz=recode(staz,
+'0-3 lat'   = '06 i mniej',
+'4-6 lat'   = '06 i mniej',
+'7-9 lat'   = '07-12',
+'8-12 lat'  = '07-12',
+'10-12 lat' = '07-12',
+'13-15 lat' = '13-18',
+'16-18 lat' = '13-18',
+'19-21 lat' = '19 i więcej',
+'22-24 lat' = '19 i więcej',
+'25 lat i więcej' = '19 i więcej') ) %>%
+#
+##T12. Uważasz, że bardziej szkodliwe dla zdrowia jest: [JW]
+# "Każda forma kontaktu"
+mutate (P5 = case_when( str_detect(P5, "Każda forma kontaktu") ~ 1, TRUE ~ 0)) %>%
+##==
+# "Palenie czynne"
+# "Palenie bierne"
+# "Nie wiem"
+#
+##T16
+mutate (
+ P9A = case_when( str_detect(P9, "Przewlekła obturacyjna choroba płuc") ~ 1, TRUE ~ 0),
+ P9B = case_when( str_detect(P9, "Astma oskrzelowa") ~ 1, TRUE ~ 0),
+ P9C = case_when( str_detect(P9, "Alergie wziewne") ~ 1, TRUE ~ 0),
+ P9D = case_when( str_detect(P9, "Przewlekłe zapalenie oskrzeli") ~ 1, TRUE ~ 0),
+ P9E = case_when( str_detect(P9, "Infekcje dróg oddechowych") ~ 1, TRUE ~ 0),
+ ##
+ P9F = case_when( str_detect(P9, "Gruźlica") ~ -1, TRUE ~ 0),
+ P9G = case_when( str_detect(P9, "Zapalenie płuc") ~ -1, TRUE ~ 0),
+ P9H = case_when( str_detect(P9, "Palenie nie powoduje") ~ -1, TRUE ~ 0),
+ P9I = case_when( str_detect(P9, "Nie wiem") ~ -1, TRUE ~ 0),
+#
+#T17
+#
+ P10A = case_when( str_detect(P10, "Nadciśnienie tętnicze krwi") ~ 1, TRUE ~ 0),
+ P10B = case_when( str_detect(P10, "Zawał mięśnia sercowego") ~ 1, TRUE ~ 0),
+ P10C = case_when( str_detect(P10, "Udar mózgu") ~ 1, TRUE ~ 0),
+ P10D = case_when( str_detect(P10, "Choroba niedokrwienna serca") ~ 1, TRUE ~ 0),
+ P10E = case_when( str_detect(P10, "Miażdżyca tętnic obwodowych") ~ 1, TRUE ~ 0),
+ P10F = case_when( str_detect(P10, "Zaburzenie rytmu serca") ~ 1, TRUE ~ 0),
+ P10G = case_when( str_detect(P10, "Choroba Buergera") ~ 1, TRUE ~ 0),
+ ##
+ P10H = case_when( str_detect(P10, "Hipercholesterolemia") ~ -1, TRUE ~ 0),
+ P10I = case_when( str_detect(P10, "Tętniak aorty") ~ -1, TRUE ~ 0),
+ P10J = case_when( str_detect(P10, "Palenie nie powoduje") ~ -1, TRUE ~ 0)) %>%
+# 
+#T18. Czy palenie papierosów powoduje choroby układu pokarmowego? [JW]
+#"Tak"
+#==
+mutate (P11 = case_when( str_detect(P11, "Tak") ~ 1, TRUE ~ 0)) %>%
+#"Nie"
+#"wiem"
+#
+#T19. Jaki według Ciebie ma wpływ palenie papierosów na narządy zmysłów?
+#
+mutate (
+ P12A = case_when( str_detect(P12, "Upośledza węch i smak") ~ 1, TRUE ~ 0),
+ P12B = case_when( str_detect(P12, "Powoduje podrażnienie spojówek") ~ 1, TRUE ~ 0),
+ P12C = case_when( str_detect(P12, "Obniża apetyt") ~ 1, TRUE ~ 0),
+ P12D = case_when( str_detect(P12, "Niszczy struny głosowe") ~ 1, TRUE ~ 0),
+ P12E = case_when( str_detect(P12, "Zmniejsza ostrość wzroku") ~ 1, TRUE ~ 0),
+ ##
+ P12F = case_when( str_detect(P12, "Palenie nie ma") ~ -1, TRUE ~ 0)) %>%
+  mutate (
+    P.total = P5 + 
+          P9A + P9B + P9C + P9D + P9E + P9F + P9G + P9H + P9I +
+          P10A + P10B + P10C + P10D + P10E + P10F + P10G + P10H + P10I +
+          P11 +
+          P12A + P12B + P12C + P12D + P12E + P12F )
 
-@@
+```
+
+### Cel
+
+Celem jest ocena wielkości zjawiska palenia tytoniu oraz
+poziom wiedzy na temat szkodliwości palenia tytoniu
+wśród
+studentów RM/PO PSW oraz zweryfikowanie wpływu wybranych czynników warunkujących na ten nałóg.
+
+**Postawiono następujące hipotezy badawcze**
+
+1. jaka jest wielkość zjawiska palenie tytoniu wśród studentów PSW?
+
+2. jaka jest wiedza na temat szkodliwości palenia tytoniu wśród studentów PSW?
+
+3. czy palenie jest skorelowane z płcią, stażem pracy i miejscem pracy?
+
+4. czy wiedza na temat szkodliwości palenie jest skorelowana z płcią, stażem pracy i miejscem pracy?
+
+5. czy palenie jest skorelowane z wiedzą na temat szkodliwości palenia?
+
+
+### Metoda
+
+Badanie ankietowe wśród studentów RM oraz PO przeprowadzono w styczniu 2023.
+Ankieta zawierała pytania dotyczące palenia tytoniu (pali/nie pali/palił, jak długo pali itd),
+test wiedzy na temat szkodliwości palenia oraz pytania
+o rodzaj miejsca pracy, staż pracy i płeć itd.
+
+Pięć następujących pytań oceniało wiedzę ankietowanego:
+
+* Uważasz, że bardziej szkodliwe dla zdrowia jest (JW),
+* Jakie według Ciebie choroby układu oddechowego mogą być spowodowane
+  bezpośrednio przez palenie papierosów?
+* Czy palenie papierosów powoduje choroby układu pokarmowego? (JW)
+* Jakie według Ciebie choroby kardiologiczne mogą być spowodowane
+  bezpośrednio przez palenie papierosów?
+  Jaki według Ciebie ma wpływ palenie papierosów na narządy zmysłów? (wielokrotnego)
+
+W przypadku pytań jednokrotnego wyboru, za wskazanie poprawnej odpowiedzi respondent otrzymywał 1 punkt.
+W przypadku pytań wielokrotnego wyboru za wskazanie prawidłowej odpowiedzi respondent otrzymywał 1 punkt, ale
+za wskazanie nieprawidłowej
+otrzymywał (minus) -1 punkt (aby nie opłacała się strategia zaznaczenia wszystkich odpowiedzi).
+Maksymalna możliwa do uzyskania liczba punktów wynosiła 19.
+
+### Zastosowane metody statystyczne
+
+* Hipotezę 1. oceniono na podstawie odsetka respondentów palących
+
+* Hipotezę 2. oceniono na podstawie odsetka respondentów wykazujących się dobrą i bardzo dobrą wiedzą na temat palenia
+
+* Hipotezę 3--5 zweryfikowano z wykorzystaniem tablic korelacyjnych/testu chi-kwadrat
+oraz porównania średniego poziomu depresji w grupach za pomocą testów Manna-Whitneya oraz
+Kruskalla-Wallisa
+
+
+### Metryczka (analiza respondentów)
+
+
+```{r, echo=F}
+P.total.mean <- mean (s1$P.total)
+P.total.sd <- sd (s1$P.total)
+P.total.median <- median(s1$P.total)
+P.total.q3 <- quantile(s1$P.total, prob=.75)
+P.total.N <- nrow(s1)
+ex.p <- ggplot(s1, aes(x = P.total)) + 
+  geom_histogram(binwidth = 2, fill='steelblue', color='navyblue') +
+  ylab("liczba respondentów") +
+  xlab("Wynik testu") +
+  ggtitle("Studenci wg wyniku testu na znajomość szkodliwości palenia") 
+ex.p
+```
+
+W badaniu wzięło udział `r P.total.N` studentów. 
+Otrzymano `r P.total.N` poprawnie
+wypełnionych ankiet. Średnia wartość testu oceniającego wiedzę
+wyniosła `r P.total.mean` (odchylenie
+standardowe `r P.total.sd`)
+
+Rozkład ankietowanych ze względu na status względem
+palenia przedstawiono na rysunku
+
+
+```{r}
+s0.status <- s1 %>%
+  select (status) %>%
+  group_by(status)%>%
+  summarize(n=n())%>%
+  mutate(prop=n/sum(n) * 100 )
+
+p.status <- s0.status %>%
+  ggplot(aes(x = status, y = prop )) +
+  ggtitle("Studenci wg statusu palenia (%)") +
+  xlab("") + ylab("%") +
+  geom_bar(position = 'dodge', stat = 'identity', fill = "steelblue") +
+  geom_text(data=s0.status, aes(label=sprintf("%.2f", prop), y= prop), vjust=1.5, color="white" ) 
+p.status
+```
+
+Rozkład ankietowanych ze względu na płeć przedstawiono na rysunku
+
+```{r}
+s0.sex <- s1 %>%
+  select (plec) %>%
+  group_by(plec)%>%
+  summarize(n=n())%>%
+  mutate(prop=n/sum(n) * 100 )
+
+p.1 <- s0.sex %>%
+  ggplot(aes(x = reorder(plec, prop), y = prop )) +
+  ggtitle("Studenci wg płci (%)") +
+  xlab("") + ylab("%") +
+  geom_bar(position = 'dodge', stat = 'identity', fill = "steelblue") +
+  geom_text(data=s0.sex, aes(label=sprintf("%.2f", prop), y= prop), hjust=1.5, color="white" ) +
+  #scale_x_discrete (breaks=var.names,  labels=var.labels) +
+  coord_flip()
+p.1
+```
+
+Rozład ankietowanych ze względu na staż pracy przedstawiono na rysunku
+
+```{r}
+s0.staz <- s1 %>%
+  select (staz) %>%
+  group_by(staz)%>%
+  summarize(n=n())%>%
+  mutate(prop=n/sum(n) * 100 )
+
+p.3 <- s0.staz %>%
+  ggplot(aes(x = staz, y = prop )) +
+  ggtitle("Studenci wg stażu pracy (%)") +
+  xlab("") + ylab("%") +
+  geom_bar(position = 'dodge', stat = 'identity', fill = "steelblue") +
+  geom_text(data=s0.staz, aes(label=sprintf("%.2f", prop), y= prop), vjust=1.5, color="white" ) 
+#scale_x_discrete (breaks=var.names,  labels=var.labels) +
+##coord_flip()
+p.3
+```
+
+Rozkład ankietowanych ze względu na rodzaj miejsca pracy
+przedstawiono na rysunku
+
+```{r}
+s0.miejsce <- s1 %>%
+  select (miejsce.pracy) %>%
+  group_by(miejsce.pracy)%>%
+  summarize(n=n())%>%
+  mutate(prop=n/sum(n) * 100 )
+
+p.4 <- s0.miejsce %>%
+  ggplot(aes(x = miejsce.pracy, y = prop )) +
+  ggtitle("Studenci wg miejsca pracy (%)") +
+  xlab("") + ylab("%") +
+  geom_bar(position = 'dodge', stat = 'identity', fill = "steelblue") +
+  geom_text(data=s0.miejsce, aes(label=sprintf("%.2f", prop), y= prop), vjust=1.5, color="white" ) 
+#scale_x_discrete (breaks=var.names,  labels=var.labels) +
+##coord_flip()
+p.4
+```
+
+### Weryfikacja hipotezy 1
+
+```{r, echo=F}
+pala_lub_palili <- s0 %>% filter (status != 'Nigdy nie paliłem/am') %>%
+  summarize(n=n())
+```
+
+Palą lub paliło `r pala_lub_palili` respondentów 
+( `r sprintf("%.f", pala_lub_palili/ P.total.N *100)` %).
+Żeby stwierdzić czy to jest dużo czy mało to np. można by porównać
+z jakąś średnią ogólnopolską.
+
+### Weryfikacja hipotezy 2
+
+Średnia wartość uzyskana w teście wyniosła `r P.total.mean`
+(mediana `r P.total.median`); 3/4 respondentów nie uzyskało więcej niż
+`r P.total.q3` (czyli `r sprintf("%.1f", P.total.q3/19 *100)` %)
+
+### Weryfikacja hipotez 3--5
+
+Czy palenie jest skorelowane z płcią?
+
+```{r}
+t.sex.f <- s1 %>%
+  select (status, plec) %>% 
+  table()
+
+t.sex.t <- kable(t.sex.f)
+t.sex.t
+
+chi_test <- chisq.test(t.sex.f)
+chi_test
+```
+
+Nie jest o czym świadczy wysoka wartość p (`r chi_test["p.value"]`)
+
+Czy palenie jest skorelowane ze stażem pracy?
+
+```{r}
+## staż
+
+t.staz.f <- s1 %>%
+  select (status, staz) %>% 
+  table()
+
+t.staz.t <- kable(t.staz.f)
+t.staz.t
+
+chi_test <- chisq.test(t.staz.f)
+chi_test
+```
+
+Nie jest o czym świadczy wysoka wartość p (`r chi_test["p.value"]`)
+
+
+Czy palenie jest skorelowane z miejscem pracy?
+
+```{r}
+##
+
+t.praca.f <- s1 %>%
+  select (status, miejsce.pracy) %>% 
+  table()
+
+t.praca.t <- kable(t.praca.f)
+t.praca.t
+
+chi_test <- chisq.test(t.praca.f)
+chi_test
+```
+
+Nie jest o czym świadczy wysoka wartość p (`r chi_test["p.value"]`)
+
+Czy wiedza na temat palenia jest skorelowana z płcią:
+
+```{r}
+##########################
+## Wiedza a płeć, staż, miejsce pracy
+
+s0.pl <- s1 %>%
+  group_by(plec) %>%
+  summarise(m = mean(P.total), n=n())
+kable(s0.pl, col.names = c('płeć', 'średnia', 'n'))
+wilcoxp <- wilcox.test(P.total ~ plec, data=s1)
+wilcoxp['p.value']
+```
+
+Porównujemy dwie grupy zatem stosujemy test Manna-Whitneya.
+Wartość p wynosi `r wilcoxp['p.value']` -- nie ma podstaw
+od odrzucenia hipotezy o braku korelacji na poziomie 0,05 (ale na poziomie
+0,1 już byśmy mogli przyjąć że takowa korelacji istnieje)
+
+Czy wiedza na temat palenia jest skorelowana z miejscem pracy:
+
+```{r}
+s0.mp <- s1 %>%
+  group_by(miejsce.pracy) %>%
+  summarise(m = mean(P.total), n=n())
+kable(s0.mp, col.names = c('m.pracy', 'średnia', 'n'))
+wilcoxp <- wilcox.test(P.total ~ miejsce.pracy, data=s1)
+wilcoxp['p.value']
+```
+
+Porównujemy dwie grupy zatem stosujemy test Manna-Whitneya.
+Wartość p wynosi `r wilcoxp['p.value']` -- nie ma podstaw
+od odrzucenia hipotezy o braku korelacji na poziomie 0,05.
+
+Czy wiedza na temat palenia jest skorelowana ze stażem:
+
+```{r}
+s0.st <- s1 %>%
+  group_by(staz) %>%
+  summarise(m = mean(P.total), n=n())
+kable(s0.st, col.names = c('staż', 'średnia', 'n'))
+kw<- kruskal.test(P.total ~ staz, data = s1)
+kw["p.value"]
+#wilcoxp <- wilcox.test(P.total ~ staz, data=s1)
+#wilcoxp['p.value']
+```
+
+Porównujemy więcej niż dwie grupy zatem stosujemy test Kruskalla-Wallisa.
+Wartość p wynosi `r kw["p.value"]` -- nie ma podstaw
+od odrzucenia hipotezy o braku korelacji na poziomie 0,05.
+
+Czy wiedza o szkodliwości palenia jest skorelowana
+ze statusem względem palenia? Chcemy zastosować tablicę korelacyjną/test chi kwadrat. Musimy zatem zamienić skalę liczbową zmiennej  mierzącej wiedzę nt szkodliwości palenia na nominalną, np tak:
+0--5 mała; 6--10 średnia; 11--15 duża, 16--19 ogromna:
+
+```{r}
+## Wiedza a palenie
+wiedza.status.t <- s1 %>%
+  select (P.total, status) %>% 
+  mutate( P.total=case_when(P.total < 6 ~ "mała",  
+                         P.total < 11 ~ "średna", 
+                         P.total < 16 ~ "duża",
+                         TRUE ~ "ogromna") ) %>%
+  table()
+
+ws.t <- kable(wiedza.status.t)
+ws.t
+
+chi_test <- chisq.test(wiedza.status.t)
+chi_test
+```
+
+Widza i status wzg. palenia nie jest skorelowana
+o czym świadczy wysoka wartość p (`r chi_test["p.value"]`)
+
+Można to samo zweryfikować porównując średnie w grupach
+i stosując test Kruskalla-Wallisa
+
+```{r}
+## albo średnia wiedzia w grupach wg statusu
+
+s0.sw <- s1 %>%
+  group_by(status) %>%
+  summarise(m = mean(P.total), n=n())
+kable(s0.sw, col.names = c('status', 'średnia', 'n'))
+
+kw<- kruskal.test(P.total ~ status, data = s1)
+kw["p.value"]
+```
+
+Wynik jest identyczny (wysoka wartość p `r kw["p.value"]`)
+
+### Wnioski
+
+* Ponad połowa studentów pali lub paliła 
+
+* Nie ma związku pomiędzy statusem względem palenia/wiedzą o szkodliwości
+palenia a płcią, miejscem pracy, stażem.
+
+## Przykład 2: Depresja i jej uwarunkowania wśród studentów PSW
+
+### Cel
+
+Celem jest ustalenie czy depresja jest istotnym problemem wśród
+studentów RM/PO PSW oraz 
+zweryfikowanie wybranych czynników warunkujących depresję.
+
+### Metoda
+
+Badanie ankietowe wśród studentów RM oraz PO przeprowadzono w styczniu 2023.
+Ankieta zawierała test samooceny depresji Becka oraz pytania
+o rodzaj miejsca pracy, staż pracy i płeć.
+
+Test samooceny depresji Becka składa się z 21 pytań. W każdym pytaniu
+możliwe są 4 warianty odpowiedzi, odpowiadające zwiększonej intensywności objawów depresji,
+którym w związku z tym przypisuje się od zera do 3 punktów. Maksymalna liczba punktów
+w teście wynosi 63 a minimalna 0.
+
+Interpretacja wyników testu Becka 0--19 brak/łagodna depresja;
+20--25 umiarkowana; 26--63 cieżka depresja.
+
+Postawiono następujące hipotezy badawcze
+
+1. depresja stanowi duży problem wśród studentów PSW
+
+2. problem depresji zależy od miejsca pracy
+
+3. problem depresji zależy od stażu pracy
+
+4. problem depresji zależy od płci
+
+Sposoby weryfikacji:
+
+* Hipotezę 1. oceniono na podstawie odsetka respondentów wykazujących ciężką postać depresji;
+
+* Hipotezę 2--4 zweryfikowano z wykorzystaniem tablic korelacyjnych/testu chi-kwadrat
+oraz porównania średniego poziomu depresji w grupach za pomocą testów Manna-Whitneya oraz
+Kruskalla-Wallisa
+
+
+```{r, echo=F}
+s0 <- read.csv("depresja_PSW_2023.csv", sep = ',',  header=F, skip=1, na.string="NA",
+   col.names = c('time', 'P1', 'P2', 'P3', 'P4', 'P5',
+   'P6', 'P7', 'P8', 'P9', 'P10',
+   'P11', 'P12', 'P13', 'P14', 'P15',
+   'P16', 'P17', 'P18', 'P19', 'P20', 'P21', 'praca', 'staz', 'plec', 'x1'),
+               fileEncoding = "UTF-8") %>%
+   mutate(
+staz=recode(staz,
+'0-3 lat'   = '06 i mniej',
+'4-6 lat'   = '06 i mniej',
+'7-9 lat'   = '07-12',
+'8-12 lat'  = '07-12',
+'10-12 lat' = '07-12',
+'13-15 lat' = '13-18',
+'16-18 lat' = '13-18',
+'19-21 lat' = '19 i więcej',
+'22-24 lat' = '19 i więcej',
+'25 lat i więcej' = '19 i więcej'),
+P1=recode(P1,
+ 'Nie jestem smutny ani przygnębiony.'=0,
+ 'Odczuwam często smutek, przygnębienie'=1,
+ 'Przeżywam stale smutek, przygnębienie i nie mogę uwolnić się od tych przeżyć.'=2,
+ 'Jestem stale tak smutny i nieszczęśliwy, że jest to nie do wytrzymania.'=3),
+###
+P2=recode(P2,
+ 'Nie przejmuję się zbytnio przyszłością.'=0,
+ 'Często martwię się o przyszłość.'=1,
+ 'Obawiam się, że w przyszłości nic dobrego mnie nie czeka.'=2,
+ 'Czuję, że przyszłość jest beznadziejna i nic tego nie zmieni.'=3),
+###
+P3=recode(P3,
+ 'Sądzę, że nie popełniam większych zaniedbań.'=0,
+ 'Sądzę, że czynię więcej zaniedbań niż inni.'=1,
+ 'Kiedy spoglądam na to, co robiłem, widzę mnóstwo błędów i zaniedbań.'=2,
+ 'Jestem zupełnie niewydolny i wszystko robię źle.'=3),
+###
+P4=recode(P4,
+ 'To, co robię, sprawia mi przyjemność.'=0,
+ 'Nie cieszy mnie to, co robię.'=1,
+ 'Nic mi teraz nie daje prawdziwego zadowolenia.'=2,
+ 'Nie potrafię przeżywać zadowolenia i przyjemności; wszystko mnie nuży.'=3),
+##
+P5=recode(P5,
+ 'Nie czuję się winnym ani wobec siebie, ani wobec innych.'=0,
+ 'Dość często miewam wyrzuty sumienia.'=1,
+ 'Często czuję, że zawiniłem.'=2,
+ 'Stale czuję się winny.'=3),
+##
+P6=recode(P6,
+ 'Sądzę, że nie zasługuję na karę'=0,
+ 'Sądzę, że zasługuję na karę'=1,
+ 'Spodziewam się ukarania'=2,
+ 'Wiem, że jestem karany (lub ukarany)'=3),
+##
+P7=recode(P7,
+ 'Jestem z siebie zadowolony'=0,
+ 'Nie jestem z siebie zadowolony'=1,
+ 'Czuję do siebie niechęć'=2,
+ 'Nienawidzę siebie'=3),
+##
+P8=recode(P8,
+ 'Nie czuję się gorszy od innych ludzi'=0,
+ 'Zarzucam sobie, że jestem nieudolny i popełniam błędy'=1,
+ 'Stale potępiam siebie za popełnione błędy'=2,
+ 'Winię siebie za wszelkie zło, które istnieje'=3),
+##
+P9=recode(P9,
+ 'Nie myślę o odebraniu sobie życia'=0,
+ 'Myślę o samobójstwie — ale nie mógłbym tego dokonać'=1,
+ 'Pragnę odebrać sobie życie'=2,
+ 'Popełnię samobójstwo, jak będzie odpowiednia sposobność'=3),
+##
+P10=recode(P10,
+ 'Nie płaczę częściej niż zwykle'=0,
+ 'Płaczę częściej niż dawniej'=1,
+ 'Ciągle chce mi się płakać'=2,
+ 'Chciałbym płakać, lecz nie jestem w stanie'=3),
+##
+P11=recode(P11,
+ 'Nie jestem bardziej podenerwowany niż dawniej'=0,
+ 'Jestem bardziej nerwowy i przykry niż dawniej'=1,
+ 'Jestem stale zdenerwowany lub rozdrażniony'=2,
+ 'Wszystko, co dawniej mnie drażniło, stało się obojętne'=3),
+##
+P12=recode(P12,
+ 'Ludzie interesują mnie jak dawniej'=0,
+ 'Interesuję się ludźmi mniej niż dawniej'=1,
+ 'Utraciłem większość zainteresowań innymi ludźmi'=2,
+ 'Utraciłem wszelkie zainteresowanie innymi ludźmi'=3),
+P13=recode(P13,
+ 'Decyzje podejmuję łatwo, tak jak dawniej'=0,
+ 'Częściej niż kiedyś odwlekam podjęcie decyzji'=1,
+ 'Mam dużo trudności z podjęciem decyzji'=2,
+ 'Nie jestem w stanie podjąć żadnej decyzji'=3),
+P14=recode(P14,
+ 'Sądzę, że wyglądam nie gorzej niż dawniej'=0,
+ 'Martwię się tym, że wyglądam staro i nieatrakcyjnie'=1,
+ 'Czuję, że wyglądam coraz gorzej'=2,
+ 'Jestem przekonany, że wyglądam okropnie i odpychająco'=3),
+P15=recode(P15,
+ 'Mogę pracować jak dawniej'=0,
+ 'Z trudem rozpoczynam każdą czynność'=1,
+ 'Z wielkim wysiłkiem zmuszam się do zrobienia czegokolwiek'=2,
+ 'Nie jestem w stanie nic zrobić'=3),
+##
+P16=recode(P16,
+ 'Sypiam dobrze, jak zwykle'=0,
+ 'Sypiam gorzej niż dawniej'=1,
+ 'Rano budzę się 1–2 godziny za wcześnie i trudno jest mi ponownie usnąć'=2,
+ 'Budzę się kilka godzin za wcześnie i nie mogę usnąć'=3),
+##
+P17=recode(P17,
+ 'Nie męczę się bardziej niż dawniej'=0,
+ 'Męczę się znacznie łatwiej niż poprzednio.'=1,
+ 'Męczę się wszystkim, co robię.'=2,
+ 'Jestem zbyt zmęczony, aby cokolwiek robić.'=3),
+##
+P18=recode(P18,
+ 'Mam apetyt nie gorszy niż dawniej'=0,
+ 'Mam trochę gorszy apetyt'=1,
+ 'Apetyt mam wyraźnie gorszy'=2,
+ 'Nie mam w ogóle apetytu'=3),
+##
+P19=recode(P19,
+ 'Nie tracę na wadze (w okresie ostatniego miesiąca)'=0,
+ 'Straciłem na wadze więcej niż 2 kg'=1,
+ 'Straciłem na wadze więcej niż 4 kg'=2,
+ 'Straciłem na wadze więcej niż 6 kg'=3),
+P20=recode(P20,
+ 'Nie martwię się o swoje zdrowie bardziej niż zawsze'=0,
+ 'Martwię się swoimi dolegliwościami, mam rozstrój żołądka, zaparcie, bóle'=1,
+ 'Stan mojego zdrowia bardzo mnie martwi, często o tym myślę'=2,
+ 'Tak bardzo martwię się o swoje zdrowie, że nie mogę o niczym innym myśleć'=3),
+P21=recode(P21,
+'Moje zainteresowania seksualne nie uległy zmianom'=0,
+'Jestem mniej zainteresowany sprawami płci (seksu)'=1,
+'Problemy płciowe wyraźnie mniej mnie interesują'=2,
+'Utraciłem wszelkie zainteresowanie sprawami seksu'=3)) %>%
+  mutate (P=P1+P2+P3+P4+P5+P6 + P7 + P8 + P9 +P10 + 
+            P11+P12+P13+P14+P15+P16 + P17 + P18 + P19 +P20 + P21,
+          Depresja = case_when( P < 20 ~ "B", P < 26 ~ "Ł", TRUE ~ "C")) 
+
+```
+
+### Metryczka
+
+
+```{r, echo=F}
+s0.N <- nrow(s0)
+##summary(s0$P)
+s0.mean <- mean(s0$P)
+s0.sd <- sd(s0$P)
+```
+
+W badaniu wzięło udział `r s0.N` studentów. Otrzymano `r s0.N` poprawnie
+wypełnionych ankiet. Średnia wartość testu Becka wyniosła `r s0.mean` (odchylenie
+standardowe `r s0.sd`)
+
+
+```{r}
+ex.p <- ggplot(s0, aes(x = P)) + 
+  geom_histogram(binwidth = 2, fill='steelblue', color='navyblue') +
+  ylab("liczba respondentów") +
+  xlab("Wynik testu") +
+  ggtitle("Studenci wg wyniku testu Becka") 
+ex.p
+
+###
+s0.sex <- s0 %>%
+  select (plec) %>%
+  group_by(plec)%>%
+  summarize(n=n())%>%
+  mutate(prop=n/sum(n) * 100 )
+
+
+p.1 <- s0.sex %>%
+  ggplot(aes(x = reorder(plec, prop), y = prop )) +
+  ggtitle("Studenci wg płci (%)") +
+  xlab("") + ylab("%") +
+  geom_bar(position = 'dodge', stat = 'identity', fill = "steelblue") +
+  geom_text(data=s0.sex, aes(label=sprintf("%.2f", prop), y= prop), hjust=1.5, color="white" ) +
+  #scale_x_discrete (breaks=var.names,  labels=var.labels) +
+  coord_flip()
+p.1
+
+##
+s0.staz <- s0 %>%
+  select (staz) %>%
+  group_by(staz)%>%
+  summarize(n=n())%>%
+  mutate(prop=n/sum(n) * 100 )
+
+p.3 <- s0.staz %>%
+  ggplot(aes(x = staz, y = prop )) +
+  ggtitle("Studenci wg stażu pracy (%)") +
+  xlab("") + ylab("%") +
+  geom_bar(position = 'dodge', stat = 'identity', fill = "steelblue") +
+  geom_text(data=s0.staz, aes(label=sprintf("%.2f", prop), y= prop), vjust=1.5, color="white" ) 
+  #scale_x_discrete (breaks=var.names,  labels=var.labels) +
+  ##coord_flip()
+p.3
+```
+
+
+
+### Weryfikacja hipotezy 1
+
+```{r, echo=F}
+s0.dep <- s0 %>%
+  select (Depresja) %>%
+  group_by(Depresja)%>%
+  summarize(n=n())%>%
+  mutate(prop=n/sum(n) * 100 )
+
+
+p.2 <- s0.dep %>%
+  ggplot(aes(x = reorder(Depresja, prop), y = prop )) +
+  ggtitle("Studenci wg stanu psychicznego (%)") +
+  xlab("") + ylab("%") +
+  geom_bar(position = 'dodge', stat = 'identity', fill = "steelblue") +
+  geom_text(data=s0.dep, aes(label=sprintf("%.2f", prop), y= prop), hjust=1.5, color="white" ) +
+  #scale_x_discrete (breaks=var.names,  labels=var.labels) +
+  coord_flip()
+p.2
+```
+
+Cieżką postać depresji wykazuje zaledwie 3% studentów. Należy odrzucić hipotezę
+że depresja stanowi poważny problem wśród studentów RM/PO PSW.
+
+### Weryfikacja hipotez 2--4
+
+Aby móc zastosować metody tablicy korelacyjnej i testu chi-kwadrat
+oryginalne wartości liczbowe depresji zamieniono
+na skalę porządkową: 0--19 brak/łagodna depresja (B);
+20--25 umiarkowana (Ł); 26--63 cieżka depresja (C).
+
+### Depresja a płeć 
+
+Tablica korelacyjna i test chi-kwadrat:
+
+```{r, echo=F}
+dep.sex.f <- s0 %>%
+  select (Depresja, plec) %>% 
+  table()
+
+dep.sex.t <- kable(dep.sex.f)
+dep.sex.t
+
+chi_test <- chisq.test(dep.sex.f)
+chi_test
+```
+
+### Depresja a staż 
+
+Tablica korelacyjna i test chi-kwadrat:
+
+```{r, echo=F}
+## tablica 
+## depresja staż
+
+dep.staz.f <- s0 %>%
+  select (Depresja, staz) %>% 
+  table()
+
+dep.staz.t <- kable(dep.staz.f)
+dep.staz.t
+
+chi_test <- chisq.test(dep.staz.f)
+chi_test
+```
+
+albo jeżeli depresję mierzymy na skali liczbowej
+można porównać wartości średnie i zastosować test Kruskalla-Wallisa
+
+```{r}
+s0.staz <- s0 %>%
+  group_by(staz) %>%
+  summarise(m = mean(P), n=n())
+kable(s0.staz, col.names = c('staż', 'średnia', 'n'))
+
+
+kw<- kruskal.test(P ~ staz, data = s0)
+kw["p.value"]
+```
+
+Wynik jest ten sam (brak zależności)
+
+### Depresja a rodzaj miejsca pracy  
+
+Tablica korelacyjna i test chi-kwadrat:
+
+```{r}
+##
+dep.praca.f <- s0 %>%
+  select (Depresja, praca) %>% 
+  table()
+
+dep.praca.t <- kable(dep.praca.f)
+dep.praca.t
+
+chi_test <- chisq.test(dep.praca.f)
+chi_test
+```
+
+Albo jeżeli depresję mierzymy na skali liczbowej
+można porównać wartości średnie i zastosować test Manna-Whitneya
+
+```{r, echo=F}
+## Depresja ~ praca
+s0.mp <- s0 %>%
+  group_by(praca) %>%
+  summarise(m = mean(P), n=n())
+kable(s0.mp, col.names = c('m-pracy', 'średnia', 'n'))
+wilcoxp <- wilcox.test(P ~ praca, data=s0)
+wilcoxp['p.value']
+```
+
+Wynik jest ten sam (brak zależności)
+
+## Wnioski
+
+* Depresja nie jest istotnym problemem wśród studentów RM/PO PSW
+
+* Nie ma związku pomiędzy depresją a stażem, płcią i miejscem pracy
 
 ## Przykład 3:
 
