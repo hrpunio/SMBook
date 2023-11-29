@@ -6,9 +6,9 @@ author:
   affiliation: Powiślańska Szkoła Wyższa (Kwidzyn/Poland)
 date: "Niedatowany/wersja robocza"
 output:
-  html_document: default
   pdf_document: 
     latex_engine: xelatex
+  html_document: default
 subtitle: Podręcznik dla studentów wydziałów nauk o zdrowiu
 description: (c) Tomasz Przechlewski / CC-BY license
 ---
@@ -58,17 +58,18 @@ diffMx <- function (s, t)  {
 ## Przedmiot statystyki
 
 Wyraz statystyka ma wiele znaczeń: **statystyki zgonów** albo **statystyki
-alkoholizmu** czyli **dane** dotyczące zgonów lub alhoholizmu.
+alkoholizmu** czyli **dane** dotyczące zgonów lub alkoholizmu.
 Statystyka to też **dziedzina wiedzy**, upraszczając zbiór metod, które służą
 do tworzenia statystyk w pierwszym znaczeniu tego słowa. 
 Wreszcie statystyka to **pojedyncza metoda** ze zbioru metod opracowanych
 w dziedzinie, np. średnia to statystyka. Trochę to niefortunne, ale
 świat nie jest doskonały jak wiemy...
 
-**Statystyka** (obiegowo): dział matematyki wzw z tym wiedza absolutnie
+**Statystyka** (obiegowo): dział matematyki, a w związku z tym
+wiedza absolutnie
 pewna i obiektywna. Nieprawda choćby z tego powodu,
-że nie jest działem matematyki, korzysta z metod matematycznych jak wiele
-innych dziedzin.
+że nie jest działem matematyki.
+Korzysta z metod matematycznych jak wiele innych dziedzin.
 
 **Statystyka** od strony czysto praktycznej to: **dane** + **procedury**
 (zbierania, przechowania, analizowania, prezentowania *danych*)
@@ -91,7 +92,7 @@ Każdy **obiekt** w populacji to
 na jednej lub więcej **zmiennych**.
 Jeżeli interesującym zjawiskiem są zgony, obserwacją jest osoba zmarła
 a zmiennymi wiek,
-płeć, przyczyna zgodnu oraz dzień tygodnia (w którym nastąpił zgon) zmarłej osoby.
+płeć, przyczyna zgonu oraz dzień tygodnia (w którym nastąpił zgon) zmarłej osoby.
 
 **Próba** to część **populacji**.
 Na przykład część zgonów w Polsce w roku 2022.
@@ -106,15 +107,15 @@ co tak naprawdę jest badane. Zgony to w oczywisty sposób za mało.
 
 Zwróćmy uwagę, że *Zgony w mieście Kwidzyn w roku 2022* to nie to samo
 (ktoś może być mieszkańcem
-a umrzeć w Polsce i/lub ktoś może nie być mieszkańcem i umrzeć w Kwidzynie)
+a umrzeć w Polsce i/lub ktoś może nie być mieszkańcem i umrzeć w Kwidzynie.)
 
 **Generalizacja**: ocena całości na podstawie części. Badamy zjawisko wypalenia
 zawodowego pielęgniarek i pielęgniarzy w Polsce (populacja). Wobec zaporowych kosztów
 mierzenia wszystkich decydujemy się na przeprowadzenie ankiety wśród studentów
-pielęniarstwa PSW (próba). Czy możemy twierdzić na podstawie próby, że wyniki
+pielęgniarstwa PSW (próba). Czy możemy twierdzić na podstawie próby, że wyniki
 badania dla całej Polski są identyczne? Raczej nie...
 
-Próba która pozwala na generalizację nazywa się próbą **reprezentatywną**.
+Próba, która pozwala na generalizację nazywa się próbą **reprezentatywną**.
 Najlepszym sposobem na uzyskanie próby reprezentatywnej jest losowanie.
 
 W oczywisty sposób badanie na podstawie próby jest tańsze niż badanie całości, co nie
@@ -124,7 +125,7 @@ się z wybranymi osobami (jak?). Dlatego też badania w oparciu o próbę nielos
 popularne (bo są tanie); należy jednakże mieć świadomość ich ograniczeń, w tym a zwłaszcza
 uogólnienia uzyskanych wyników.
 
-**Mądrość statystyczna** nt liczebności próby i wnioskowania z próby nierepreznetatywnej:
+**Mądrość statystyczna** nt liczebności próby i wnioskowania z próby niereprezentatywnej:
 badano czy nowy preparat podnosi
 nośność kur, w 33,3% przypadków podniósł w 33,3% przypadków nie
 podniósł, a na 33,3 nie wiadomo, bo kura uciekła.
@@ -134,14 +135,16 @@ podniósł, a na 33,3 nie wiadomo, bo kura uciekła.
 Potocznie kojarzy się z linijką i wagą ale w statystyce używany jest w szerszym
 znaczeniu. Ustalenie płci albo przyczyny zgonu to też pomiar.
 
-**Pomiar** -- przyporządkowanie wariantom **zmiennej** liczb lub symboli z pewnej **skali pomiarowej**.
-Przykładowo jeżeli jednostką jest zgon a zmiennymi wiek, płeć przyczyna zgodnu i dzień tygodnia to
+**Pomiar** to przyporządkowanie wariantom **zmiennej** liczb lub symboli z pewnej **skali pomiarowej**.
+Przykładowo jeżeli jednostką statystyczną jest zgon a zmiennymi 
+wiek, płeć,
+przyczyna zgonu oraz dzień tygodnia to
 pomiar będzie polegał na ustaleniu (przyporządkowaniu) wieku w latach,
-płci ('K'/'M'), przyczyny (z katalogu ICD10 zapewne)
+płci ('K'/'M'), przyczyny (identyfikatora z katalogu ICD10 zapewne)
 oraz numeru dnia tygodnia (lub nazwy dnia tygodnia).
-Wiek/numer są liczbami, płeć i przyczyna symbolem.
+Wiek oraz numer dnia są liczbami, płeć i przyczyna symbolem.
 
-**Typy skal pomiarowych**:
+Wyróżnia się następujące **typy skal pomiarowych**:
 
 * **nominalna** (*nominal scale*), klasyfikuje: płeć zmarłego;
 
@@ -162,7 +165,7 @@ przyjmują dowolne wartości liczbowe z pewnego przedziału liczbowego, np. ciś
 
 **Rodzaje danych**
 
-* Przekrojowe (zmarli)
+* Przekrojowe (zmarli w Kwidzynie)
 
 * Czasowe: każda obserwacja ma przypisany czas (liczba zmarłych w Polsce w latach 2000--20222)
 
@@ -190,7 +193,7 @@ Sposoby analizy danych zależą od sposobu pomiaru (populacja/próba/generalizac
 **Wnioskowanie statystyczne**: wnioskowanie na temat całości na podstawie próby;
 wykorzystuje metody analizy matematycznej
 
-Opisujemy populację lub próbę. Wnioskujemy na podstawie próby o całości...
+**Opisujemy** populację lub próbę. **Wnioskujemy** na podstawie próby o całości...
 
 ## Sposoby pomiaru danych i organizacja badania
 
@@ -212,9 +215,9 @@ dużej ilości kawy poprawia wynik egzaminu?
 Raczej nie: można sobie wyobrazić, że studenci którzy poświęcili 
 więcej czasu na naukę pili w tym czasie kawę (na przykład żeby nie zasnąć). 
 Prawdziwą przyczyną jest czas poświęcony na przygotowanie a nie to ile ktoś
-wypił lub nie wypił kawy. Inaczej mówić gdyby ktoś pił dużo kawy
+wypił lub nie wypił kawy. Inaczej mówiąc gdyby ktoś pił dużo kawy,
 bo uwierzył, że to poprawi mu wyniki 
-i się nie uczył to pewnie by się rozczarował.
+i się nie uczył, to pewnie by się rozczarował.
 
 Rodzaje badań: **eksperymentalne** vs **obserwacyjne**. 
 
@@ -233,7 +236,7 @@ oraz **grupa kontrolna** (**control group**)
 W medycynie używa się terminu **badania kliniczne** czyli badania
 które dotyczą ludzi. Badania kliniczne  także dzielą 
 się na eksperymentalne oraz obserwacyjne. Eksperyment nazywa się 
-RCT (randomized clinical trial/randomizowane kontrolowane badania kliniczne.)
+RCT (*randomized clinical trial*/randomizowane kontrolowane badania kliniczne.)
 Manipulacja określana jest jako
 ekspozycja (**exposure**) albo leczenie (**treatment**)
 Zmienne ukryte określa się mianem **confunding factors** (**czynniki zakłócające**)
@@ -241,10 +244,13 @@ Zmienne ukryte określa się mianem **confunding factors** (**czynniki zakłóca
 Rysunek przedstawia zależność pomiędzy wynikiem (*outcome*), przyczyną
 oraz czynnikami zakłócającymi na przykładzie zależności dotyczącej domniemanego
 wpływu fluoryzowania wody na zwiększenie ryzyka zgonów z powodu nowotworów.
-W jednym z badań porównano współczynniki zgonów z miast fluoryzujących oraz
+W badaniu którego autor uważał że udowodnił związek fluoryzowanie→nowotór
+porównał on współczynniki zgonów z miast fluoryzujących oraz
 nie fluoryzujących wodę. Okazało się, że przeciętnie współczynnik ten był wyższy
 w grupie miast fluoryzujących wodę. Czy to świadczy, że fluoryzowanie wody
-powoduje raka? Nie. W innym badaniu tych samych miast okazało się, że
+powoduje raka? Nie...
+
+W innym badaniu tych samych miast okazało się, że
 w grupie miast fluoryzujących wodę przeciętnie mieszkają starsi ludzie. 
 A ponieważ współczynniki zgonów rosną wraz ze wzrostem wieku, to nie można
 wykluczyć, że prawdziwą przyczyną obserwowanego zwiększenia wartości
@@ -258,8 +264,8 @@ ekspozycji na wynik
 poprzez porównanie wielkości wyniku dla różnych wielkości ekspozycji
 
 Są dwa typy **efektu przyczynowego**:
-indywidualny efekt interwencji (*Individual Treatment Effect*) oraz
-średni efekt interwencji (*Average Treatment Effect*)
+indywidualny efekt interwencji (*individual treatment effect*) oraz
+średni efekt interwencji (*average treatment effect*)
 
 **Individual Treatment Effect (ITE)**
 
@@ -284,10 +290,8 @@ Wtedy efekt przyczynowy można zdefiniować jako:
 
 ATT - ATC (albo ATT/ATC)
 
-gdzie
-
-ATT oznacza ATE w grupie eksperymentalnej 
-a ATC oznacza ATE w grupie kontrolnej
+gdzie: ATT oznacza ATE w grupie eksperymentalnej 
+a ATC oznacza ATE w grupie kontrolnej.
 
 **Przykład (kontynuuacja)**:
 można przypuszczać, że oprócz kawy na wynik egzaminu ma wpływ np. wrodzone predyspozycje
@@ -305,7 +309,7 @@ Raczej tak...
 
 **Badania obserwacyjne** można z kolei podzielić na **analityczne** i **opisowe**.
 
-W badaniach **analitycznych** porówuje się grupę kontrolną z grupą poddaną ekspozycji/leczeniu;
+W badaniach **analitycznych** porównuje się grupę kontrolną z grupą poddaną ekspozycji/leczeniu;
 w badaniach przekrojowych nie ma grupy kontrolnej.
 
 Badania analityczne dzielimy dalej na:
@@ -316,13 +320,17 @@ Badania analityczne dzielimy dalej na:
 
 * **przekrojowe**.
 
-Badanie **kohortowe** (**cohort study**): wieloletnie badania na dużej grupie jednostek;
-następstwo czasu: od ekspozycji do wyniku/choroby (**prospektywne**.)
+Badanie **kohortowe** (**cohort study**): wieloletnie badania na dużej grupie jednostek.
+Pomiar zaczynamy od ekspozycji kończymy na wyniku/chorobie/zgonie 
+(takie badanie nazywamy **prospektywnym**.
 Problem: koszty (np. choroby rzadkie wymagają ogromnych kohort).
 
-Badanie **kliniczno-kontrolne** (**case-control study**): restrospektywna ocena ekspozycji
-dla jednostek, u których stwierdzono wynik (chorobę); grupę kontrolną tworzą **dopasowane** jednostki
+Badanie **kliniczno-kontrolne** (**case-control study**): **restrospektywna** ocena ekspozycji
+dla jednostek, u których stwierdzono wynik (chorobę). Grupę kontrolną tworzą **dopasowane** jednostki
 u których wyniku nie stwierdzono (dopasowane w sensie, że są podobne podobne.)
+W praktyce badanie kliniczno-kontrolne to badanie chorych, którzy zgłosili się do przychodni;
+grupą kontrolną są podobni chorzy (wiek, płeć) z innej przychodni :-)
+
 Problem1: błąd pamięci (**recall bias**) pacjenci -- zwłaszcza zdrowi -- słabo pamiętają
 fakty które miały miejsce lata temu.
 Problem2: trudności z **dopasowaniem** grupy kontrolnej (łatwiej powiedzieć niż zrobić.)
@@ -333,13 +341,14 @@ od skutku do przyczyny (case-control)
 Badanie przekrojowe (**cross-sectional study**): badanie związku między wynikiem a ekspozycją
 bez podziału na grupę eksperymentalną i kontrolną.
 
-Problem: nie da się określić związku przyczyna-skutek w taki sposób jaki się stosuje w badaniach analitycznych. 
-Można do tego celu zastosować **model** regresji liniowej.
+Problem: nie da się określić związku przyczyna-skutek w taki sposób jaki się stosuje w badaniach analitycznych,
+ale można do tego celu zastosować **model** regresji liniowej.
 
 **Przykład**: badamy grupę pacjentów przychodni onkologicznej. Stwierdzamy że 90% z nich paliło
 papierosy. Czy z tego wynika że palenie powoduje raka? Niekoniecznie. Możemy **dopasować**
 pacjentów o podobnym profilu demograficzno-społecznym z innej przychodni (którzy nie chorują na raka)
-i stwierdzić że 20% z nich paliło. To już jest konkretny argument -- ale takie badanie nie jest już **przekrojowe**
+i stwierdzić że 20% z nich paliło. 
+To już jest konkretny argument -- ale takie badanie nie jest już **przekrojowe**
 tylko **kliniczno-kontrolne**.
 
 **Przykład (kontynuuacja)**:
@@ -347,12 +356,11 @@ można oprócz pytania studentów o ilość kawy i wynik pytać ich jeszcze o cz
 na naukę oraz o średnią ze studiów (wrodzone predyspozycje w dziedzinie intelektualnej). 
 Za pomocą metody regresji możemy ustalić czy i jak bardzo kawa, czas i predyspozycje
 wpływają na ocenę. Teoretycznie zamiast eksperymentu można używać regresji, ale jest to w większości
-przypadków trudne--albo zmienne nie da się zmierzyć (czy średnia ze studiów jest dobrą miarą predyspozycji)
+przypadków trudne--albo zmienne nie da się zmierzyć (czy średnia ze studiów jest dobrą miarą predyspozycji?)
 albo jakąś ważną zmienną pominiemy. Więcej na temat regresji w rozdziale 3.
 
-
 Badanie **ekologiczne**: badanie (przekrojowe) zależności pomiędzy danymi **zagregowanymi** a nie indywidualnymi.
-Przykładowo zależność pomiędzy przecietną
+Przykładowo zależność pomiędzy przeciętną
 wielkością dochodu narodowego, a przeciętną oczekiwaną długością życia np. na poziomie kraju.
 
 Problem: błąd ekologizmu (**ecological fallacy**.) Zależności na poziomie indywidualnym oraz zagregowanym
@@ -380,7 +388,7 @@ wykorzystane w pracy wystarczy zapoznać się z treścią punktu **materiał i m
 powinien tam być określony **rodzaj badania**: eksperyment, badanie kohortowe, kliniczno-kontrolne,
 przekrojowe lub inne...
 
-**Przykład 1: Czy konsumpcja soli kuchennej szkodzi (eksperyment)**
+**Przykład 1: Czy konsumpcja soli kuchennej szkodzi? (eksperyment)**
 
 Neal B. i inni zastosowali eksperyment kontrolowany do zbadania
 wpływu substytucji chlorku sodu chlorkiem potasu na choroby sercowo-naczyniowe 
@@ -388,16 +396,16 @@ wpływu substytucji chlorku sodu chlorkiem potasu na choroby sercowo-naczyniowe
 New England Journal of Medicine*,
 https://doi.org/10.1056/NEJMoa2105675). W badaniu 
 przeprowadzonym w Chinach, uczestniczyli mieszkańcy 600 wsi, podzieleni
-losowa na dwie grupy. Uczestnik badania musiał mieć minimum 60 lat oraz
-wysokie ciśnienie krwi. W badaniu uczestniczyło prawie 21 tysięcy osób. 
-Grupa kontrolna (przez pięć lat) używała soli zawierającej 75% chlorku potasu oraz 25%
-chlorku sodu; grupa badana używała soli tradycyjnej czyli zawierającej
+losowo na dwie grupy. Uczestnik badania musiał mieć minimum 60 lat oraz
+nadciśnienie krwi. W badaniu uczestniczyło prawie 21 tysięcy osób. 
+Przez pięć lat trwania eksperymentu grupa kontrolna używała soli zawierającej 75% chlorku potasu oraz 25%
+chlorku sodu; grupa badana zaś używała soli tradycyjnej czyli zawierającej
 wyłącznie chlorek sodu. Obserwowano w okresie pięcioletnim w obu grupach 
 liczbę udarów, incydentów sercowo-naczyniowych oraz zgonów. Wpływ 
 substytucji oceniono porównując współczynniki ryzyka w obu grupach.
 
 
-**Przykład 2: Konflikt praca-dom w zawodzie pielęgniarki (obserwacyjne)**
+**Przykład 2: Konflikt praca-dom w zawodzie pielęgniarki (przekrojowe)**
 
 Simon i inni badali konflikt Praca-Dom w zawodzie Pielęgniarki/Pielęgniarza
 (Work-Home Conflict in the European Nursing Profession
@@ -408,25 +416,28 @@ https://pubmed.ncbi.nlm.nih.gov/15702752/)
 Konflikt Praca-Dom (WHC) to sytuacja kiedy
 nie można zająć się zadaniami lub obowiązkami w jednej dziedzinie ze względu na obowiązki
 w drugiej domenie. Teoria zapożyczona z obszaru Nauk o Zarządzaniu zapewne.
-Ten konflikt jest mierzony odpowiednią skalą pomiarową składającą się z pięciu pytać.
-Czynnikami które WHC mają powodować są: czasPracy, grafik (w sensie rodzaj etatu/zmianowość) 
-oraz nacisk-na-nadgodziny (występuje lub nie) oraz
-intensywność pracy, obciążenie emocjonalne, jakość zarządzania.
-(także mierzone odpowiednimi skalami pomiarowymi). Badano 27,603 osoby.
+Ten konflikt jest mierzony odpowiednią skalą pomiarową składającą się z pięciu pytań.
+Czynnikami które WHC mają powodować są: czas pracy,
+grafik (w sensie rodzaj etatu/zmianowość),
+nacisk-na-nadgodziny (występuje lub nie),
+intensywność pracy, 
+obciążenie emocjonalne oraz jakość zarządzania.
+(ostatnie trzy mierzone odpowiednimi skalami pomiarowymi,
+czytaj: serią pytań w ankiecie).
+Badano 27,603 osoby.
 Podstawowym narzędziem badawczym jak się łatwo domyśleć była ankieta,
 a przyczyny WHC ustalono za pomocą metody regresji wielorakiej.
 
 Teraz porówajmy koszty badania #1, w którym jedynie starano się ustalić że sól szkodzi (lub nie)
-z badaniem #2, w którym starano się ustalić przyczyny stanów psychicznych -:)
+z badaniem #2, w którym starano się ustalić przyczyny stanów psychicznych badanych-:)
 
 
 ## Miary częstości chorób
 
-**Populacja narażona** (*population at risk*): grupa osób podatnych na zdarzenie (chorobę); rak szyjki macicy dotyczy 
-kobiet a nie wszystkich
+**Populacja narażona** (*population at risk*): grupa osób podatnych na zdarzenie (chorobę); 
+rak szyjki macicy dotyczy  kobiet a nie wszystkich.
 
-**Współczynnik chorobowości** (*prevalence rate*): liczba chorych w określonym czasie (dzień, tydzień, rok) podzielona
-przez wielkość populacji narażonej. 
+**Współczynnik chorobowości** (*prevalence rate*): liczba chorych w określonym czasie (dzień, tydzień, rok) podzielona przez wielkość populacji narażonej. 
 Ponieważ są to zwykle bardzo małe liczby, mnoży się wynik przez $10^n$ dla ułatwienia interpretacji. 
 Czyli jeżeli
 chorych w populacji narażonej o wielkości 1mln jest 20 osób, to współczynnik wynosi 20/1mln = 0,000002 co trudno
@@ -439,8 +450,8 @@ co interpretujemy jako dwa przypadki na 100 tys.
 **Współczynnik śmiertelności** (*case fatality rate*): liczba zgonów z powodu X w określonym czasie (dzień, tydzień, rok) podzielona
 przez liczbę chorych na X w tym samym czasie. Śmiertelność jest miarą ciężkości choroby X.
 
-**Współczynnik zgonów** (*death rate*): liczba zgonów  określonym czasie przez średnia
-liczba ludności w tym czasie (pomnożone przez $10^n$).
+**Współczynnik zgonów** (*death rate*): liczba zgonów w określonym czasie przez średnią
+liczbę ludności w tym czasie (pomnożone przez $10^n$).
 
 Jeżeli współczynnik zgonów nie uwzględnia wieku, nazywany jest surowym (*crude*); grupy różniące się strukturą wieku
 nie powinny być porównywane za pomocą współczynników surowych tylko standaryzowanych (*age-standardized* albo
@@ -467,7 +478,7 @@ i mamy w tym zakresie trzy możliwości:
    Same zalety:-)
    
 W tym podręczniku nie opisujemy posługiwania się żadnym programem. Te informacje
-zawierają odpowiednio *Łagodne wprowadznie z Jamovi*
+zawierają odpowiednio *Łagodne wprowadzenie z Jamovi*
 oraz *Łagodne wprowadzenie z R*. (oba w przygotowaniu)
    
 # Analiza jednej zmiennej
@@ -511,7 +522,7 @@ krajach UE w roku 2018
 
 **Jednostka badania**: absolwent studiów pielęgniarskich w roku 2018, 
 
-**badana cecha**: kraj w którym ukończył studia (nominalna)
+**Badana cecha**: kraj w którym ukończył studia (nominalna)
 
 
 ```{r, echo=F}
@@ -675,7 +686,7 @@ będzie on bardziej zrozumiały i łatwiejszy w interpretacji.
 
 ### skala nominalna
 
-Wykres kołowy
+Wykres słupkowy (*bar chart*)
 
 ```{r, echo=F}
 
@@ -728,11 +739,11 @@ pc2
 
 Ale jest mniej efektywny. Wymaga legendy w szczególności, która utrudnia 
 interpretację treści (nieustannie trzeba porównywać koło z legendą żeby ustalić
-który kolor to który kraj)
+który kolor to który kraj.)
 
 Jeżeli zwiększymy liczbę krajów wykres kołowy staje się zupełnie nieczytelny
 (brakuje rozróżnialnych kolorów a wycinki koła są zbyt wąskie żeby cokolwiek
-wyróżniały)
+wyróżniały):
 
 ```{r, echo=F}
 pc21 <- g2 %>%
@@ -767,6 +778,8 @@ pc41
 
 ### skala liczbowa
 
+Histogram to coś w rodzaju wykresu słupkowego tylko na jednej osi zamiast
+wariantów cechy są przedziały wartości.
 Histogram przedstawiający rozkład współczynników dzietności dla 
 wszystkich krajów świata w roku 2018
 
@@ -782,7 +795,7 @@ h2018
 
 ```
 
-Podobnie jak Tablice rysunki powinny być opatrzone tytułem
+Podobnie jak tablice, rysunki powinny być opatrzone tytułem
 oraz zawierać źródło wskazujące na pochodzenie danych
 (zobacz przedstawione przykłady.)
 
@@ -796,8 +809,8 @@ Aby przekonać swoich przełożonych do zwiększenia nakładów na szpitale polo
 nie tylko staranną ewidencję szpitalną, ale zgromadzone dane potrafiła analizować, używając
 także wykresów własnego projektu.
 
-W szczególności słynne są diagramy  Nightingale, które wprawdzie
-(podobno) nie okazały się szczególnie użyteczne, no ale nie każdy nowy 
+W szczególności słynny jest diagram Nightingale zwane także różą Nightingale, które wprawdzie
+(podobno) nie okazały się szczególnie użyteczny, no ale nie każdy nowy 
 pomysł jest od razu genialny:
 
 ![](./FN_diagram.jpg)
@@ -862,7 +875,7 @@ $\bar x$ to średnia wartość zmiennej $x$.
 
 **Mediana** (*Median*, kwartyl drugi) dzieli **uporządkowaną** zbiorowość na dwie równe części;
 połowa jednostek ma wartości cechy mniejsze lub równe medianie, a połowa
-wartości cechy równe lub większe od Me. 
+wartości cechy równe lub większe od mediany. 
 Stąd też mediana bywa nazywana wartością środkową.
 
 Własności mediany: odporna na wartości nietypowe (w przeciwieństwie do średniej)
@@ -873,7 +886,6 @@ one zbiorowość na 4 równe części, każda zawierająca 25% całości.
 Pierwszy kwartyl dzieli **uporządkowaną** zbiorowość w proporcji 25%--75%.
 Trzeci dzieli **uporządkowaną** zbiorowość w proporcji 75%--25%. 
 Drugi kwartyl to mediana.
-
 
 **Kwantyle** (D, wartości dziesiętne), podobnie jak kwartyle, tyle że dzielą na 10 części.
 
@@ -907,7 +919,7 @@ nie większą niż `r q3.2018` dziecka.
 
 ### Miary zmienności
 
-Miary zmienności określają zmienność (dyspersję albo rozporoszemoe) w zbiorowości
+Miary zmienności określają zmienność (dyspersję albo rozproszenie) w zbiorowości
 
 Rodzaje miar zmienności:
 
@@ -929,17 +941,15 @@ $$s^2 = \frac{1}{N} \left( (x_1 - \bar x)^2 + (x_2 - \bar x)^2 +
 Przy czym często zamiast dzielenie przez $N$ dzielimy przez $N-1$.
 
 **Odchylenie standardowe** (*standard deviation*, sd) jest
-pierwiastkiem kwadratowym z wariancji.
-Parametr ten określa
-przeciętne zróżnicowanie poszczególnych wartości cechy od średniej
-arytmetycznej.
-
+pierwiastkiem kwadratowym z wariancji. Parametr ten określa
+przeciętną różnicą wartości cechy od średniej arytmetycznej.
 
 **Rozstęp ćwiartkowy** (*interquartile range*, IQR) ma banalnie prostą definicję:
 
 $$
 R_Q = Q_3 - Q_1
 $$
+gdzie: $Q_1$, $Q_3$ oznaczają odpowiednio pierwszy oraz trzeci kwartyl.
 
 **Przykład**: współczynnik dzietności na świecie w roku 2018 (cd)
 
@@ -958,7 +968,7 @@ podać jednostkę miary.
 
 Asymetria (*skewness*), to odwrotność symetrii. Szereg jest symetryczny
 jeżeli jednostki są rozłożone ,,równomiernie'' wokół wartości średniej.
-Wartości średniej i mediany są sobie równe.
+W szeregu symetrycznym wartości średniej i mediany są sobie równe.
 
 ![](./Negative_and_positive_skew.png)
 
@@ -1003,7 +1013,7 @@ Oraz
 ## Porównanie wielu rozkładów
 
 Często strukturę jednego rozkładu należy porównać z innym. Albo trzeba porównać
-strukturę wielu rozkładów. Pokażemy jak to zrobić na przykładzie
+strukturę wielu rozkładów. Pokażemy jak to zrobić na przykładzie.
 
 ```{r}
 hw <- 4
@@ -1137,18 +1147,16 @@ Do porównania wielu rozkładów szczególnie użyteczny jest wykres zwany pude�
 
 Konstrukcja pudełka na wykresie: 
 górny/dolny bok równy kwartylom, a linia pozioma w środku pudełka równa medianie;
-linie pionowe (zwane wąsami) mają długość równą $Q1 - 1,5 IQR$ 
-oraz $Q3 + IQR (dla przypomnienia: Q1, Q3 to kwartyle, IQR to odstęp między kwartlowy);
-Linia pozioma w połowie pudełka określa przeciętny poziom zjawiska; wysokość pudełka/wąsów
+linie pionowe (zwane wąsami) mają długość równą $Q_1 - 1,5 \textrm{IQR}$ 
+oraz $Q_3 + \textrm{IQR}$ (dla przypomnienia: $Q_1$, $Q_3$ to kwartyle, zaś $\textrm{IQR}$ to odstęp między kwartlowy); Linia pozioma w połowie pudełka określa przeciętny poziom zjawiska; wysokość pudełka/wąsów
 określa zmienność (im większe wąsy/wysokość tym większa zmienność).
-Obserwacje nietypowe (czyli takie których wartość jest albo mniejsza od $Q1 - 1,5IQR$
-albo większa od $Q3 + 1,5IQR$)są zaznaczana 
-indywidualnie jako kropki nad/pod wąsami.
+Obserwacje nietypowe (czyli takie których wartość jest albo mniejsza od $Q_1 - 1,5\textrm{IQR}$
+albo większa od $Q_3 + 1,5\textrm{IQR}$) są zaznaczane indywidualnie jako kropki nad/pod wąsami.
 
 ![](./box-plot-0.jpg)
 
 Zwróć uwagę na sztuczkę: wartości nietypowe nie są definiowane jako (na przykład) górne/dolne
-1% wszystkich wartości (bo wtedy **każdy rozkład** miałby outliers);
+1% wszystkich wartości (bo wtedy **każdy rozkład** miałby wartości nietypowe);
 ale jako wartości mniejsze/większe od $Q_* \pm 1,5 \times \mathrm{IQR}$.
 Wszystkie wartości rozkładów o umiarkowanej zmienności mieszczą się wewnątrz czegoś takiego.
 
@@ -1181,21 +1189,18 @@ pox
 Od razu widać, że przeciętnie najcięższy zawodnicy byli na turnieju w roku 2019; największe zróżnicowanie masy
 ciała występowało na turnieju w roku 2023.
 
-
 # Łagodne wprowadzenie do wnioskowanie statystycznego
 
 **Chcemy się dowiedzieć czegoś na temat populacji (całości)
 na podstawie próby (części tej całości).**
 
 Przykładowo chcemy ocenić ile wynosi średnia waga główki kapusty
-na 100 h polu. Można ściąć wszystki i zważyć ale można też ściąć
+na 100 h polu. Można ściąć wszystkie i zważyć, ale można też ściąć
 trochę (pobrać próbę się mówi uczenie) zważyć i poznać średnią
 na całym polu z dobrą dokładnością.
 
 ## Przykładowy problem nr 1
 
-Plik `rwc2015.csv` zawiera dane (w tym dotyczące wagi) dla wszystkich rugbystów uczestniczących 
-w turnieju o Puchar Świata w 2015 roku. 
 
 ```{r}
 r <- read.csv("rwc2015.csv", sep = ';', dec = ",",  header=T, na.string="NA")
@@ -1204,10 +1209,10 @@ w <- as.vector(na.omit(r$weight))
 wN <- length(w)
 ```
 
-Liczba rugbystów: `r wN`.
-
-Obliczamy (prawdziwą) średnią, odchylenie standardowe i współczynnik
-zmienności:
+W turnieju o Puchar Świata w rugby w 2015 roku uczestniczyło
+`r wN` rugbystów. Znamy szczegółowe dane odnośnie wzrostu i wagi każdego
+uczestnika turnieju. Obliczamy (prawdziwą) średnią, odchylenie standardowe 
+i współczynnik zmienności masy ciała:
 
 ```{r}
 summary(w)
@@ -1223,8 +1228,9 @@ max.err.sd <- sd(w, na.rm = T)
 #max.err.sd / true.mean.w * 100
 ```
 
-Czyli średnio rugbysta na turnieju RWC'2015 ważył `r true.mean.w` kg
-a odchylenie standardowe (*s*) wyniosło `r max.err.sd` kg.
+Czyli średnio rugbysta na turnieju RWC'2015 ważył 
+`r sprintf ("%.2f", true.mean.w)` kg (`Mean` na wydruku powyżej)
+a odchylenie standardowe (*s*) wyniosło `r sprintf("%.2f", max.err.sd)` kg.
 
 Wykres (rozkład jest dwumodalny; bo w rugby są dwie grupy zawodników, wcale
 nie wszyscy > 110 kg):
@@ -1251,8 +1257,12 @@ mean.s02 <- mean(s02)
 sd.s02 <- sd(s02)
 ```
 
-średnia wyszła `r mean.s02` a odchylenie standardowe `r  sd.s02`.
-Wartość $s/\sqrt{2}$ jest równa `r max.err.sd/sqrt(2) `
+średnia (średnich z próby) ma wartość `r sprintf("%.2f", mean.s02)` 
+a odchylenie standardowe `r sprintf("%.2f", sd.s02)`.
+Wartość $s/\sqrt{2}$ (odchylenie standardowe podzielone przez pierwiastek kwadratowy 
+z liczebności próby) jest równa `r sprintf("%.2f", max.err.sd/sqrt(2)) `. Zauważmy że ta wartość
+jest zbliżona do odchylenia standardowego uzyskanego 
+w eksperymencie (`r sprintf("%.2f", sd.s02)` vs `r sprintf ("%.2f", max.err.sd/sqrt(2)) `)
 
 **szacujemy średnią na podstawie 10 zawodników pobranych losowo**
 
@@ -1267,8 +1277,9 @@ mean.s10 <- mean(s10)
 sd.s10 <- sd(s10)
 ```
 
-średnia wyszła `r mean.s10` a odchylenie standardowe `r  sd.s10`.
-Wartość $s/\sqrt{10}$ jest równa `r max.err.sd/sqrt(10) `
+średnia wyszła `r round(mean.s10, 2)` a odchylenie standardowe 
+`r round(sd.s10, 2)`.
+Wartość $s/\sqrt{10}$ jest równa `r round(max.err.sd/sqrt(10), 2)`.
 
 **szacujemy średnią na podstawie 40 zawodników pobranych losowo**
 
@@ -1285,10 +1296,12 @@ sd.s40 <- sd(s40)
 
 ```
 
-średnia jest równa `r mean.s40` a odchylenie standardowe `r  sd.s40`.
-Wartość $s/\sqrt{40}$ jest równa `r max.err.sd/sqrt(40) `.
+średnia jest równa `r round(mean.s40, 2)` a odchylenie standardowe `r round(sd.s40, 2)`.
+Wartość $s/\sqrt{40}$ jest równa `r round(max.err.sd/sqrt(40), 2)`.
 
 **Wykres**
+
+Podsumujmy eksperyment wykresem rozkładu wartości średnich.
 
 ```{r}
 all.samples <- data.frame(s02, s10, s40)
@@ -1319,7 +1332,7 @@ W ogólności metodą taką, formalnie funkcję elementów z próby, nazywa się
 w statystyce **estymatorem**. Warto to pojęcie zapamiętać. Wnioskujemy
 o wartości parametru w populacji posługując się estymatorem.
 
-Kontynuując wnioski z eksperymetu należy zauważyć, że
+Kontynuując wnioski z eksperymentu należy zauważyć, że
 wszystkie średnie-ze-średnich (bez względu na liczebność próby) są zbliżone do wartości
 prawdziwej (to się nazywa **nieobciążoność**);
 Mówiąc innymi słowy jeżeli będziemy oceniać wartość prawdziwej średniej na podstawie próby,
@@ -1346,9 +1359,6 @@ Konkretną wartość estymatora dla konkretnych wartości próby nazywamy **ocen
 
 ## Przykładowy problem nr 2
 
-Plik `kandydaci_ws_2018_3.csv` zawiera dane (w tym dotyczące wieku) dla 
-ponad 7000 kandydatów do Sejmików Wojewódzkich w wyborach samorządowych w 2018 roku.
-
 ```{r}
 r <- read.csv("kandydaci_ws_2018_3.csv", sep = ';', dec = ",",  header=T, na.string="NA")
 
@@ -1356,10 +1366,12 @@ w <- as.vector(na.omit(r$wiek))
 wN <- length(w)
 ```
 
-Dokładniej to kandydatów jest `r wN`.
-
-Obliczamy (prawdziwą) średnią, odchylenie standardowe i współczynnik
-zmienności:
+W wyborach samorządowychych w Polsce w roku 2018 o mandat radnego
+sejmików wojewódzkich ubiegało się `r wN`kandydatów. 
+Znamy szczegółowe dane odnośnie wieku każdego kandydata
+bo to zostało publicznie podane przez Państwową Komisję Wyborczą.
+Obliczamy (prawdziwą) średnią, odchylenie standardowe 
+i współczynnik zmienności wieku kandydatów:
 
 ```{r}
 summary(w)
@@ -1370,8 +1382,8 @@ max.err.sd <- sd(w)
 ##max.err.sd / true.mean.w * 100
 ```
 
-Czyli średnio kandydat miał `r true.mean.w` lat
-a odchylenie standardowe wieku wyniosło `r max.err.sd` lat.
+Czyli średnio kandydat miał `r round(true.mean.w, 2)` lat
+a odchylenie standardowe wieku wyniosło `r round(max.err.sd, 2)` lat.
 
 Wykres (rozkład znowu jest dwumodalny z jakiś powodów):
 
@@ -1394,10 +1406,12 @@ k02 <- mks(2, wN)
 
 summary(k02)
 sd02 <- sd(k02)
+mean.s02 <- mean(k02)
 ```
 
-Odchylenie standardowe wyniosło `r  sd02`.
-Wartość $s/\sqrt{2}$ jest równa `r max.err.sd/sqrt(2) `.
+Średnia średnich z próby ma wartość `r round(mean.s02, 2)` lat.
+Odchylenie standardowe wyniosło `r  round(sd02, 2)`.
+Wartość $s/\sqrt{2}$ jest równa `r round(max.err.sd/sqrt(2), 2) `.
 
 **Szacujemy średnią na podstawie 10 kandydatów pobranych losowo**
 
@@ -1407,10 +1421,12 @@ Powtarzamy eksperyment `r sample.size` razy.
 k10 <- mks(10, wN)
 summary(k10)
 sd10 <- sd(k10)
+mean.s10 <- mean(k10)
 ```
 
-Odchylenie standardowe wyniosło `r  sd10`.
-Wartość $s/\sqrt{10}$ jest równa `r max.err.sd/sqrt(10) `.
+Średnia średnich z próby ma wartość `r round(mean.s10, 2)` lat.
+Odchylenie standardowe wyniosło `r  round(sd10, 2)`.
+Wartość $s/\sqrt{10}$ jest równa `r round(max.err.sd/sqrt(10), 2) `.
 
 **Szacujemy średnią na podstawie 40 kandydatów pobranych losowo**
 
@@ -1426,8 +1442,10 @@ summary(k40)
 sd40 <- sd(k40)
 ## 46 / 2.37
 ##diffMx(k40, true.mean.w)
+mean.s40 <- mean(k40)
 ```
 
+Średnia średnich z próby ma wartość `r round(mean.s40, 2)` lat.
 Odchylenie standardowe wyniosło `r sd40`.
 Wartość $s/\sqrt{40}$ jest równa `r max.err.sd/sqrt(40) `.
 
@@ -1442,13 +1460,16 @@ k70 <- mks(70, wN)
 summary(k70)
 sd70 <- sd(k70)
 ##diffMx(k70, true.mean.w)
+mean.s70 <- mean(k70)
 ```
 
-
+Średnia średnich z próby ma wartość `r round(mean.s70, 2)` lat.
 Odchylenie standardowe wyniosło `r  sd70`
 Wartość $s/\sqrt{70}$ jest równa `r max.err.sd/sqrt(70) `.
 
 **Wykres**
+
+Podsumujmy eksperyment wykresem rozkładu wartości średnich.
 
 ```{r}
 all.samples <- data.frame(k02, k10, k40, k70)
@@ -1469,164 +1490,24 @@ ggplot(aes(x=v)) +
 p1
 ```
 
-## Przykładowy problem nr 3
+Obserwujemy to samo co w przypadku wagi rugbystów: im większa próba tym
+dokładniejsza wartość średniej wieku. Bez względu na wielkość próby przeciętnie
+otrzymujemy prawdziwą wartość średniej.
 
-Plik `airline_delay_causes.csv` (pobrany z http://www.transtats.bts.gov/OT_Delay/OT_DelayCause1.asp) zawiera dane dotyczące opóźnień w ruchu lotniczym w USA w latach 2003--2021. Są to wskaźniki miesięczne
-dla każdego przewoźnika/lotniska docelowego. Wykorzystujemy zmienne
-`arr_flights`: Number of flights which arrived at the airport;
-`arr_del15`: Number of flights delayed (>= 15minutes late);
-`arr_delay`: Total time (minutes) of delayed flights
-
-```{r}
-dc <- read.csv("airline_delay_causes.csv", 
-              sep = ',', dec = ".",  header=T, na.string="NA")
-```
-
-Obliczamy wskaźnik: średnie opóźnienie miesięczne (pomijamy
-lotniska o liczbie lotów mniejszej niż 30/miesiąc czyli 1/dzień):
-
-```{r}
-dc0 <- dc %>% select (arr_flights, arr_del15, arr_delay) %>%
-  filter (arr_flights > 30) %>%
-  mutate (del1 = arr_delay/arr_flights, 
-          del15p = arr_del15/ arr_flights)
-```
-Czyli pojedyncza liczba to średnie opóźnienie dla każdej kombinacji X-Y-Z-M, gdzie
-X oraz Y to lotniska, Z to przewoźnik a M to numer miesiąca. (Samoloty, które
-wylądowało o czasie mają opóźnienie równe zero oczywiście)
-
-Liczymy prawdziwe średnie itp:
-
-```{r}
-nr0 <- nrow(dc0)
-
-w <- as.vector(na.omit(dc0$del1))
-
-wN <- length(w)
-summary(w)
-
-true.mean.w <- mean(w)
-##sd(w)
-max.err <- 0.1 * true.mean.w 
-max.err.sd <- sd(w) 
-##max.err.sd / true.mean.w * 100
-```
-
-średnia wartość wskaźnika linia/lotnisko wynosi zatem
-`r  true.mean.w` (odchylenie standardowe `r  max.err.sd`).
-Wszytkich wskaźników jest `r nr0`
-
-Rozkład wskaźnika jest cośkolwiek skośny:
-
-```{r}
-q1 <- ggplot(dc0, aes(x=del1)) +
-  geom_vline(xintercept = true.mean.w, colour="forestgreen", size=.4) +
-  geom_histogram(binwidth=1, alpha=.5, fill="steelblue") +
-  ggtitle("Miesięczny wskaźnik opóźnień przewoźnik/lotnisko")
-q1
-```
-
-
-**Szacujemy średnią na podstawie 2 wartości pobranych losowo**
-
-Wykonujemy jak zwykle `r sample.size` powtórzeń
-
-```{r}
-k02 <- mks(2, wN)
-
-summary(k02)
-sd02 <- sd(k02)
-
-##summary(k1)
-##sd1 <- sd(k1)
-sample.m1 <- mean(k02)
-```
-
-Odchylenie standardowe wyniosło `r  sd02`.
-Wartość $s/\sqrt{2}$ jest równa `r max.err.sd/sqrt(2) `.
-
-**szacujemy średnią na podstawie 10 wartości pobranych losowo**
-
-```{r}
-k10 <- mks(10, wN)
-summary(k10)
-sd10 <- sd(k10)
-```
-
-Odchylenie standardowe wyniosło `r  sd10`.
-Wartość $s/\sqrt{10}$ jest równa `r max.err.sd/sqrt(10) `.
-
-**szacujemy średnią na podstawie 100 wartości pobranych losowo**
-
-```{r}
-k100 <- mks(100, wN)
-summary(k100)
-sd100 <- sd(k100)
-```
-
-
-Odchylenie standardowe wyniosło `r  sd100`.
-Wartość $s/\sqrt{100}$ jest równa `r max.err.sd/sqrt(100) `.
-
-**szacujemy średnią na podstawie 1000 wartości pobranych losowo**
-
-```{r}
-k1000 <- mks(1000, wN)
-summary(k1000)
-sd1000 <- sd(k1000)
-```
-
-Odchylenie standardowe wyniosło `r  sd1000`.
-Wartość $s/\sqrt{1000}$ jest równa `r max.err.sd/sqrt(1000) `.
-
-**Wykres**
-
-```{r}
-error10 <- true.mean.w  * 0.1
-
-all.samples <- data.frame(k02, k10, k100, k1000)
-p1 <- all.samples %>%
-  pivot_longer(cols = c(k02, k10, k100, k1000), names_to = 'k', values_to = 'v') %>%
-  ggplot(aes(x=v)) +
-  facet_wrap(~ k) +
-  geom_vline(xintercept = true.mean.w, colour="forestgreen", size=.4) +
-  geom_vline(xintercept = true.mean.w - max.err.sd, colour="red", size=.4) +
-  geom_vline(xintercept = true.mean.w + max.err.sd, colour="red", size=.4) +
-  geom_vline(xintercept = true.mean.w - error10, colour="red", size=.4) +
-  geom_vline(xintercept = true.mean.w + error10, colour="red", size=.4) +
-  geom_histogram(binwidth=.5, alpha=.5, fill="steelblue") +
-  ggtitle("rozkład miesięcznego wskaźnika opóźnień linia-lotnisko (minuty)")
-p1
-```
 
 Wniosek: precyzja wnioskowania zwiększa się wraz z liczebnością próby; tym szybciej
 im rozproszenie w populacji generalnej jest mniejsze. Żeby z dużą dokładnością
-wnioskować o średniej dla dużej populacji wcale nie trzeba pobierać dużej próby.
-W ostatnim przykładzie wystarczyło
-100/1000 (czyli 0,04--0,4% liczebności populacji).
+wnioskować o średniej dla dużej populacji wcale nie trzeba pobierać 
+dużej próby (w ostatnim przykładzie było to 1% całości).
 
 ## Rozkład normalny
 
 **Rozkład empiryczny** zmiennej to
 przyporządkowanie kolejnym wartościom zmiennej odpowiadających im liczebności. 
 
-Interpretacja wartości rozkładu empirycznego zwykle jest w kategoriach ryzyka/szansy czy
-prawdopodobieństwa. Przykładowo dla średniej wartości opóźnień, wyobraźmy sobie
-że interesują nas wszystkie średnie wartości opóźnień równe 5.0000 minut. 
-Takich średnich jest `r nrow( dc0 %>% filter (del1 == 5.00))`; 
-wszystkich średnich dla przypomnienia
-jest `r nrow(dc0)`; iloraz tych wartości będzie interpretowany 
-jako ryzyku/szans/prawdopodobieństwo
-(wynosi ono `r nrow( dc0 %>% filter (del1 == 5.00)) / nrow(dc0) * 100` %. 
-Można ten procent interpretować
-że ryzyko średniego opóźnienia w wielkości 5 minut na dowolnym połączeniu w USA.)
-
-Podobnie można obliczyć ryzyko średniego opóźnienia w wielkości 5--6 minut 
-na dowolnym połączeniu w USA. 
-Wynosi ono:  `r nrow( dc0 %>% filter (del1 >= 5.0 & del1 <= 6.0)) / nrow(dc0) * 100` %.
 
 Załóżmy że istnieje zapotrzebowanie społeczne na  wiedzę na temat ryzyka średnich opóźnień. Możemy
-to jak widać łatwo liczyć ale jedocześnie jest to kłopotliwe. Należy do tego mieć zbiór
+to jak widać łatwo liczyć ale jednocześnie jest to kłopotliwe. Należy do tego mieć zbiór
 272 tys liczb. **Rozkład teoretyczny** to matematyczne uogólnienie **rozkładu empirycznego**.
 Jest to model matematyczny operujący pojęciem (ściśle sformalizowanym) **prawdopodobieństwa**
 (zamiast liczebności). **Rozkład teoretyczny** jest: 
@@ -1642,15 +1523,15 @@ zależy tylko od dwóch parametrów: średniej i rozproszenia, gdzie średnia b�
 równa (prawdziwej) średniej w populacji a rozproszenie wartości
 rozproszenia w populacji podzielonej przez pierwiastek z wielkości próby.
 
-Dla próby 100-elementowej (opóźnienia lotów) wygląda to tak:
+Dla próby 40-elementowej (wiek kandydatów) wygląda to tak:
 
 ```{r}
-this.sample.size <- 100
+this.sample.size <- 40
 k1000m <- true.mean.w
 k1000sd <- max.err.sd / sqrt(this.sample.size)
-this.binwd <- .1
-p1b <- data.frame(k100) %>%
-  ggplot(aes(x=k100)) +
+this.binwd <- .25
+p1b <- data.frame(k40) %>%
+  ggplot(aes(x=k40)) +
   geom_histogram(binwidth= this.binwd, alpha=.5, fill="steelblue") +
   stat_function(fun = function(x) 
   {dnorm(x, mean = k1000m, sd = k1000sd) * sample.size * this.binwd},
@@ -1658,15 +1539,15 @@ p1b <- data.frame(k100) %>%
 p1b
 ```
 
-dla próby 1000-elementowej (opóźnienia lotów):
+dla próby 70-elementowej tak:
 
 ```{r}
-this.sample.size <- 1000
+this.sample.size <- 70
 k1000m <- true.mean.w
 k1000sd <- max.err.sd / sqrt(this.sample.size)
-this.binwd <- .1
-p1b <- data.frame(k1000) %>%
-  ggplot(aes(x=k1000)) +
+this.binwd <- .25
+p1b <- data.frame(k70) %>%
+  ggplot(aes(x=k70)) +
   geom_histogram(binwidth= this.binwd, alpha=.5, fill="steelblue") +
   stat_function(fun = function(x) 
   {dnorm(x, mean = k1000m, sd = k1000sd) * sample.size * this.binwd},
@@ -1685,23 +1566,45 @@ się po `r sample.size/2` orłów i reszek,
 co w modelu matematycznym będzie opisane jak:
 prawdopodobieństwo wyrzucenia orła wynosi 0,5. 
 Rzucanie monetą to bardzo prosty eksperyment; nasz z liczeniem średniej
-wskaźnika opóźnień jest dużo bardziej skomplikowany więc miło jest się
+wieku jest bardziej skomplikowany więc miło jest się
 dowiedzieć,  że używając czerwonej krzywej można łatwo obliczyć jak bardzo
-prawdopodobne jest na przykład popełnienie błędu większego niż 10%, albo
-większego niż 5 minut. Albo jak duża powinna być próba żeby ten
-błąd był nie większy niż 5 minut.
+prawdopodobne jest na przykład popełnienie błędu większego niż 10% średniej, albo
+większego niż 0,1 lat. Albo jak duża powinna być próba żeby ten
+błąd był nie większy niż 0,1 lat.
 
-Dla rozkładu normalnego prawdopodobieństwo $m \pm s$ wynosi około 0,68
+Interpretacja wartości rozkładu empirycznego zwykle jest w kategoriach ryzyka/szansy czy
+prawdopodobieństwa. Przykładowo interesuje nas prawdopodobieństwo, że kandydat ma
+mniej niż 30 lat. 
+Takich kandydatów jest `r nrow( r %>% filter (wiek < 30))`
+a wszystkich kandydatów dla przypomnienia
+jest `r nrow(r)`. Iloraz tych wartości będzie interpretowany 
+jako ryzyko/szansa/prawdopodobieństwo
+(wynosi ono `r round(nrow( r %>% filter (wiek < 30)) / nrow(r) * 100, 2)`%.)
+
+Podobnie można obliczyć prawdopodobieństwo, że wiek kandydata będzie się
+zawierał w przedziale 50--60 lat.
+Ponieważ kandydatów w wieku 50--60 lat jest `r nrow( r %>% filter (wiek >= 50 & wiek <= 60))`,
+to szukane prawdopodobieństwo 
+jest równe: `r round(nrow( r %>% filter (wiek >= 50 & wiek <= 60)) / nrow(r) * 100, 2)`%.)
+
+Jeżeli zamiast rozkładu empirycznego będziemy używać rozkład normalnego, który jak widzimy
+jest jego dobrym przybliżeniem, to nie musimy liczyć empirycznych liczebności. Wystarczy że
+znamy średnią i odchylenie standardowe a potrafimy obliczyć każde prawdopodobieństwo dla
+każdego przedziału wartości zmiennej.
+
+W szczególności dla rozkładu normalnego prawdopodobieństwo $m \pm s$ (przyjęcie wartości z przedziału
+średnia plus/minus odchylenie standardowe) wynosi około 0,68
 prawdopodobieństwo $m \pm 2 \times s$ wynosi około 0,95 a $m \pm 3 \times s$ około 0,997.
-Czyli w przedziale $-3s < m +3s$ znajdują się praktycznie wszystkie wartości tego
-rozkładu.
+Czyli w przedziale $[-3s < m, m +3s]$ znajdują się praktycznie wszystkie wartości
+rozkładu. Albo innymi słowy przyjęcie wartości spoza przedziału średnia plus/minus trzykrotność
+odchylenia standardowego jest bardzo mało prawdopodobna.
 
 Rozkład normalny będzie identyczny dla wagi rugbystów, wieku czy czasu opóźnień.
 Uogólnieniem teoretycznym pojęcia **zmiennej statystycznej**, które do tej pory
 używaliśmy jest **zmienna losowa**, zmienna której wartości są liczbami a realizują się
 z określonym prawdopodobieństwem np. określonym przez rozkład normalny.
 
-## Wnioskowanie statystyczne (interferance)
+## Wnioskowanie statystyczne (*interferance*)
 
 Analizując dane uzyskane z próby celem jest ich **uogólnienie** na całą populację.
 Przypominamy, że wnioskujemy
@@ -1713,8 +1616,8 @@ na podstawie konkretnego estymatora, inaczej mówiąc jak dużo mogliśmy się p
 Do oceny tej wiarygodności można użyć wariancji-średniej-z-próby (która nazywa się
 **wariancją błędu** albo **error variance**)
 Jeżeli wariancja błędu jest duża, to w pojedynczej próbie mogą wystąpić wartości
-znacznie różniące się od średniej; jeżeli jest mała to takie bardzo różniące
-się od średniej wartości mają małe szanse na zaistnienie. Do tego w przypadku rozkładu
+znacznie różniące się od prawdziwej średniej; jeżeli jest mała to takie bardzo różniące
+się od prawdziwej średniej wartości mają małe szanse na zaistnienie. Do tego w przypadku rozkładu
 normalnego wiemy ze wariancja błędu = $s/\sqrt(n)$
 (gdzie $s$ jest wariancją w populacji a $n$ wielkością próby.)
 
@@ -1751,7 +1654,7 @@ Z góry wyznaczone prawdopodobieństwo nazywa się
 
 ### Testowanie hipotez
 
-Większość analiz statystycznych polega na porówaniu. W wyniku
+Większość analiz statystycznych polega na porównaniu. W wyniku
 tego porównania otrzymujemy liczbę. Załóżmy, że mamy dwie próby dotyczące wieku
 kandydatów na radnych do sejmików wojewódzkich z roku 2018 (średnia 46,1) 
 oraz z roku 2014 (47,2). Różnica wynosi 1,1 lat i może być spowodowana błędem przypadkowym
@@ -1769,7 +1672,7 @@ $H_1$: różnica średnich wieku jest różna od zera ($m_1 \not= m_2$)
 Hipotezy sprawdzamy wykorzystując **test statystyczny** czyli funkcję 
 której wartości zależą wartości testowanych parametrów (w tym przypadku $m_1$ oraz $m_2$)
 
-Nie jest chyba wielkim zakoczeniem że testem dla różnicy średnich jest
+Nie jest chyba wielkim zaskoczeniem że testem dla różnicy średnich jest
 różnica średnich w próbie. Całkiem zdroworozsądkowo możemy przyjąć, że duże różnice
 świadczą na rzecz hipotezy alternatywnej a małe na rzecz hipotezy zerowej. 
 
@@ -1784,7 +1687,7 @@ Statystyk zawsze wybierze drugą wersję. Pozostaje tylko ustalić (dla statysty
 Rzadko to rzadziej niż z góry ustalone prawdopodobieństwo otrzymania różnicy którą otrzymaliśmy
 w próbie lub większej (coś jak założenie że zrealizował się najlepszy z najgorszych scenariuszy).
 
-Przyjmijmy przykładowo że prawdopodobieństwo wystąpienia różnica 1,1 lat (i większej) oszacowane
+Przyjmijmy przykładowo że prawdopodobieństwo wystąpienia różnicy 1,1 lat (i większej) oszacowane
 na podstawie odpowiedniego modelu matematycznego (rozkład normalny) wynosi 0,3 co znaczy że coś takiego
 zdarza się względnie często -- trzy razy na 10 pobranych prób.
 
@@ -1856,7 +1759,8 @@ a chorobą nowotworową, wiekiem a prawdopodobieństwem zgonu z powodu COVID19 i
 
 Jaki jest charakter zależności? Jaka jest siła zależności?
 
-Rodzaj metod zależy od sposobu pomiaru danych (nominalne, porządkowe, liczbowe)
+Rodzaj metod zastosowanej do empirycznej weryfikacji zależy 
+w szczególności od sposobu pomiaru danych (nominalne, porządkowe, liczbowe.)
 
 
 ## Dwie zmienne nominalne
@@ -1867,12 +1771,12 @@ Ryzyko to udział (iloraz) liczby sukcesów do liczby prób (zdarzeń pozytywnyc
 empiryczny odpowiednik prawdopodobieństwa.
 
 
-**Przykład: Linus Pauling i witamina C**
+**Przykład: Podawanie witaminy C a przeziębienie/brak przeziębienia**
 
-Linus Pauling (laureat nagrody Nobla/witamina C). Podawanie witaminy C
-a przeziębienie/brak przeziębienia.
+Eksperyment przeprowadził Linus Pauling (laureat nagrody Nobla 
+za odkrycie witaminy C).
 
-Eksperyment polegał na tym, że podzielił 280 narciarzy na dwie grupy
+Eksperyment Paulinga polegał na tym, że podzielił 280 narciarzy na dwie grupy
 po 140 osób; przez 5--7 dni podawał witaminę C jednej grupie
 oraz placebo drugiej grupie;
 obserwował zachorowania na przeziębienie przez następne dwa tygodnie.
@@ -1900,13 +1804,13 @@ Jeżeli $r_e$ oznacza ryzyko w grupie eksperymentalnej
 a $r_k$ w grupie kontrolnej (control group; grupa nienarażona/unexposed), 
 to **różnica ryzyk** to po prostu $r_e - r_k$.
 W przykładzie będzie to -9,94%
-Ta miara aczolwiek prosta jest rzadko stosowana. 
+Ta miara aczkolwiek prosta jest rzadko stosowana. 
 
-Znacznie częściej używa sę **ryzyka względnego** definiowanego jako
-$rr = r_e/r_k$. W przykładzie będzie to 12,2/22,14 = 0,55. Podanie witaminy C
+Znacznie częściej używa się **ryzyka względnego** definiowanego jako
+$RR = r_e/r_k$. W przykładzie będzie to 12,2/22,14 = 0,55. Podanie witaminy C
 zmniejsza ryzyko o prawie połowę. 
-Oczywiste jest że $rr < 1$ oznacza zmniejszenie
-ryzyka; $rr > 1$ zwiększenia a $rr = 1$ oznacza brak zależności.
+Oczywiste jest że $RR < 1$ oznacza zmniejszenie
+ryzyka; $RR > 1$ zwiększenia a $RR = 1$ oznacza brak zależności.
 
 Zamiast ryzyka (czyli ilorazu liczby sukcesów do liczby prób) można używać
 pojęcia szansa/szansy (**odds**) definiowanego
@@ -1934,7 +1838,7 @@ Podanie witaminy C zmniejsza szansę na zachorowanie o ponad połowę.
 Albo 1/0,48 = 2,04, narciarz który nie brał witaminy C ma ponad 
 dwukrotnie większą szansę na zachorowanie.
 
-Właściwości $\textrm{or}$: 
+Właściwości ilorazu szans: 
 
 * jeżeli równe 1 to sukces/porażka równie prawdopodobne;
 * jeżeli większe od 1 to sukces bardziej prawdopodobny;
@@ -1952,39 +1856,39 @@ dwudzielnej o wymiarach $2\times 2$, którą można przestawić następująco
 
 
 
-Dla danych w tej postaci: $rr = c(a+b)/a(c+d)$ oraz $\textrm{OR} = (ad)/ (bc)$ 
+Dla danych w tej postaci: $RR = c(a+b)/a(c+d)$ oraz $\textrm{OR} = (ad)/ (bc)$ 
 
 ### Przedziały ufności dla błędu względnego i ilorazu szans
 
 Dla dużej próby można założyć, że $\ln(RR)$  ma rozkład normalny
 o odchyleniu standardowym  równym: 
 
-$$se_{rr} (ln(rr)) = \sqrt{1/a + 1/c - 1/(a+b) - 1/(c+d)},$$
+$$se_{RR} (\ln(RR)) = \sqrt{1/a + 1/c - 1/(a+b) - 1/(c+d)},$$
 
 stąd 95% przedział określony jest przez: 
 
-$$rr - 1,96 se_{rr} < ln(RR) < rr + 1,96 se_{rr},$$
+$$rr - 1,96 se_{RR} < \ln(RR) < RR + 1,96 se_{RR},$$
 albo po przekształceniu:
 
-$$\exp(ln(rr) \pm 1,96 se_{rr})$$ 
+$$\exp(\ln(RR) \pm 1,96 se_{RR})$$ 
 
 (dla przypomnienia $\exp(x)$ to $e^x$)
 
 
 Dla dużej próby można założyć, że $\ln(OR)$  ma rozkład normalny
 o odchyleniu standardowym 
-równym: $se_{or} (ln(or)) = \sqrt{1/a + 1/b + 1/c + 1/d}$,
+równym: $se_{OR} (\ln(OR)) = \sqrt{1/a + 1/b + 1/c + 1/d}$,
 stąd 95% przedział określony jest
-przez: $or - 1,96 se_{or} < ln(OR) < or + 1,96 se_{or}$,
-albo po przekształceniu: $\exp(ln(or) \pm 1,96 se_{or})$.
+przez: $OR - 1,96 se_{OR} < \ln(OR) < OR + 1,96 se_{OR}$,
+albo po przekształceniu: $\exp(\ln(OR) \pm 1,96 se_{OR})$.
 
 Jeżeli przedział ufności zawiera 1 to świadczy to o 
 braku zależności (na 95% poziomie ufności).
 
 Przykładowo (kontynuując eksperyment Paulinga)
 
-$\ln(or) =  \ln(0,48) = -0.7339691$ oraz
-$se_{or} (\ln(or)) = 0.3293214$ stąd 
+$\ln(OR) =  \ln(0,48) = -0.7339691$ oraz
+$se_{OR} (\ln(OR)) = 0.3293214$ stąd 
 $-0,7339691 \pm 1,96 \cdot 0.3293214$. 
 
 Końce przedziałów: [-1.379439044; -0.0884991560]; 
@@ -2246,7 +2150,7 @@ a miejscem pracy nie ma zależności.
 
 ### Testowanie normalności
 
-Statystk nie przyjmuje założeń na słowo honoru.
+Statystyk nie przyjmuje założeń na słowo honoru.
 Kiedy zatem można przyjąć założenie o normalności a kiedy nie?
 Można to ocenić na podstawie wykresu kwantylowego. Oraz
 posługując się testem Shapiro-Wilka
@@ -2391,10 +2295,10 @@ o zależności nieliniowej.
 **Przykład:  Zależność pomiędzy zamożnością a spożyciem mięsa**
 
 Organizacja Narodów Zjednoczonych do spraw Wyżywienia i Rolnictwa znana jako FAO
-udostępnia dane dotyczące konsumcji żywności na świecie. Bank światowy
+udostępnia dane dotyczące konsumpcji żywności na świecie. Bank światowy
 udostępnia dane dotyczące dochodu narodowego. 
 
-Konsumpcja mięsa jest mierzona jako średnia konsumpacja w kilogramach w każdym kraju (*per capita* się mówi);
+Konsumpcja mięsa jest mierzona jako średnia konsumpcja w kilogramach w każdym kraju (*per capita* się mówi);
 Dochód podobnie jako średnia wielkość dochodu narodowego *per capita*. 
 Dane dotyczą roku 2013.
 
@@ -2487,7 +2391,7 @@ jeden i nazywa się go **zmienną zależną** a przyczyn może być wiele i nosz
 nazwę **zmiennych niezależnych** (albo **predyktorów**).
 W przypadku gdy związek dotyczy dwóch zmiennych mówi się o **regresji prostej**.
 Przykładowo zależność
-pomiędzy spożywaniem kawy w czasie sesji egzaminacyjnej a wynikiem ogzaminu
+pomiędzy spożywaniem kawy w czasie sesji egzaminacyjnej a wynikiem egzaminu
 można formalnie zapisać jako:
 
 $$ \textrm{wynik} = b_0 + b_1 \cdot \textrm{kawa}$$
@@ -2524,7 +2428,7 @@ $Y = b_0 + b_1 \cdot X_1$ pomiędzy $X$ a $Y$, która w próbie
 ujawnia się z błędem o charakterze losowym. Ten błąd może wynikać
 z pominięcia jakiejś ważnej zmiennej (model
 to zawsze uproszczenie rzeczywistości), przybliżonego charakteru linii
-prostej jako zależości pomiędzy $X$ a $Y$ (prosta ale nie do końca prosta)
+prostej jako zależności pomiędzy $X$ a $Y$ (prosta ale nie do końca prosta)
 albo błędu pomiaru.
 
 Współczynnik $a$ (nachylenia prostej) określa wielkość efektu
@@ -2543,7 +2447,7 @@ Wartości $b_0$ oraz $b_1$ wyznacza się minimalizując:
 
 $$\sum_{i=1}^N (\hat y_i - y_i)^2$$
 
-Powyższe **kryterim minimalizacyjne** oznacza,
+Powyższe **kryterium minimalizacyjne** oznacza,
 że suma **kwadratów odchyleń wartości
 empirycznych od wartości teoretycznych ma być minimalna**. Stąd **metoda największych kwadratów**
 szacowania parametrów linii regresji.
@@ -2551,16 +2455,16 @@ szacowania parametrów linii regresji.
 Rozwiązując powyższy problem minimalizacyjny otrzymujemy wzory
 definiujące parametry $b_0$ oraz $b_1$.
 Przypominamy, że **estymatorem** nazywamy metodę oszacowania parametru na podstawie próby.
-Ponieważ traktujemy $b_0$ oraz $b_1$ jako parametry jakieś populacj generalnej
+Ponieważ traktujemy $b_0$ oraz $b_1$ jako parametry jakieś populacji generalnej
 to wzory na $b_0$ oraz $b_1$ statystyk nazwie estymatorami parametrów
 $b_0$ oraz $b_1$. W konsekwencji tego $b_0$/$b_1$ posiadają jakąś wartość średnią oraz wariancję.
 
-Przypominamy że wartość średnia **dobrego estymatora** powinna wynosić zero (bo wtedy nie ma błądu systematycznego)
+Przypominamy że wartość średnia **dobrego estymatora** powinna wynosić zero (bo wtedy nie ma błędu systematycznego)
 oraz że wariancja estymatora powinna maleć wraz ze wzrostem liczebności próby. Można udowodnić
 że estymatory parametrów $b_0$/$b_1$
 uzyskane metodą najmniejszych kwadratów posiadają obie właściwości.
 
-Graficznie **kryterim minimalizacyjne** przedstawia rysunek
+Graficznie **kryterium minimalizacyjne** przedstawia rysunek
 
 ![](./kmnk_roznice.png){width=75%}
 
@@ -2574,7 +2478,7 @@ dopasowana (jeżeli tylko punktów jest więcej niż dwa.)
 
 W oczywisty sposób regresja po lewej lepiej opisuje zależność (linia
 prosta jest bliżej wartości zaobserwowanych) niż regresja po prawej.
-Jak to ocenić w sposób bardziej konretny a nie tylko na oko?
+Jak to ocenić w sposób bardziej konkretny a nie tylko na oko?
 
 **Ocena dopasowania: średni błąd szacunku**
 
@@ -2702,8 +2606,8 @@ kable(lm.0.coef.df, row.names = F,
 ```
 
 
-Co znacza, że wzrost wagi o 1kg
-oznacza przeciętnie większy wzrost o `r coeff_b` cm. Współczynnik determinacji
+Co oznacza, że wzrost wagi o 1kg
+skutkuje przeciętnie większym wzrostem o `r coeff_b` cm. Współczynnik determinacji
 wynosi `r sprintf ("%.2f", lmr * 100)`%. 
 Współczynnik nachylenia prostej jest istotny ponieważ wartość $p$
 jest grubo poniżej zwyczajowego poziomu
@@ -2793,7 +2697,7 @@ Jeżeli chcemy porównywać wielkości współczynników to trzeba je **zestanda
 
 Standaryzowany współczynnik regresji dla $i$-tej zmiennej,
 obliczony poprzez pomnożenie współczynnika regresji $b_i$ przez $s_{xi}$
-i podzielenie przez $s_y$, tj. $\beta_i = b_i s_{xi}/ s_y$. Jego interpretacja jest cokolwiek dziwacza:
+i podzielenie przez $s_y$, tj. $\beta_i = b_i s_{xi}/ s_y$. Jego interpretacja jest cokolwiek dziwaczna:
 zmiana zmiennej $X_i$ o jedno odchylenie standardowe (s_{xi})
 skutkuje zmianą zmiennej $Y$ o $\beta_i$ jej odchylenia standardowego $s_y$.
 Na szczęście współczynniki regresji standaryzuje się nie w celu lepszej interpretacji,
@@ -2983,8 +2887,8 @@ Należy każdą zamienić na dwie zmienne binarne, wg schematu:
 
 `ever.smoker` (kiedyś palił) = 1 jeżeli palił ale nie pali, 0 w przeciwnym przypadku
 
-Zmiennia płeć `genderF` = 1 jeżeli kobieta, lub 0 jeżeli mężczyzna. Zauważmy, że nazwa zmiennej
-dwuwartościowej wskazuje która wartość jest zakodowana jako 1. Przykładowo `genderF` (female żeby się
+Zmienna płeć `genderF` = 1 jeżeli kobieta, lub 0 jeżeli mężczyzna. Zauważmy, że nazwa zmiennej
+dwuwartościowej wskazuje która wartość jest zakodowana jako 1. Przykładowo `genderF` (*female* żeby się
 trzymać języka angielskiego) wskazuje że jedynką jest kobieta.
 Taka konwencja ułatwia interpretację. Gdybyśmy zamiast `genderF` nazwali zmienną `gender` to na pierwszy
 rzut oka nie było by wiadomo co zakodowano jako jeden. A tak wiadomo od razu jak
@@ -3027,7 +2931,7 @@ Współczynnik zbieżności wynosi `r sprintf ("%.2f", lmr * 100)`%. Tylko dwie 
 są istotne. Zwróćmy uwagę że nieistotnie zmienne mają przedziały ufności zawierające zero. W konsekwencji
 z 95% prawdopodobieństwem wartości tych współczynników mogą być raz ujemne raz dodatnie--nie mamy
 nawet pewności co do kierunku zależności między zmienną zmienną objaśniającą a ciśnieniem.
-Zmienne, które okazały się istotne jednocześnie mają nawiększą wielkość efektu (kolumna `Beta`)
+Zmienne, które okazały się istotne jednocześnie mają największą wielkość efektu (kolumna `Beta`)
 i nie jest to przypadek.
 
 Oszacowanie tego samego równania dla próba o wielkości 4490 obserwacji daje następujące
@@ -3062,7 +2966,7 @@ liczebności próby spowodowało że tylko dwie z siedmiu zmiennych
 mają nieistotne wartości. Analizując wartości standaryzowane możemy ustalić
 które zmienne mają największy wpływ na wielkość ciśnienia krwi.
 
-Ktoś mógły dojść do wniosku że wszystko da się **uistotnić**
+Ktoś mógłby dojść do wniosku że wszystko da się **uistotnić**
 wystarczy zwiększyć wielkość próby. Teoretycznie tak, praktycznie nie. 
 W praktyce nie interesuje nas niewielka wielkość 
 efektu (znikomy wpływ czegoś na coś). Dodatkowo zebranie dużej próby może
@@ -3070,14 +2974,14 @@ być kosztowne czyli w praktyce niemożliwe -- nie mamy dość dużo pieniędzy.
 Można teoretycznie określić jaka wielkość próby pozwoli nam na ocenę jakiej
 wielkości efektu. Sposób postępowania jest wtedy następujący: określamy
 jaka wielkość efektu ma **znaczenie praktyczne**, na tej podstawie określamy
-niezbędną minimalną liczebność próby. Takie zaawanasowane podejście
+niezbędną minimalną liczebność próby. Takie zaawansowane podejście
 wykracza poza ramy tego podręcznika.
 
 
 ## Regresja logistyczna
 
 Jeżeli $Y$ jest zmienną **dwuwartościową**, to jest taką, 
-która przymuje tylko dwie wartości (chory/zdrowy)
+która przyjmuje tylko dwie wartości (chory/zdrowy)
 to metoda regresji nie może być zastosowana. 
 Przykładowo jeżeli zakodujemy te wartości jako 0 i 1 odpowiednio,
 to zastosowanie regresji
@@ -3188,7 +3092,7 @@ jest wartość prawdopodobieństwa granicznego  tym mniej będzie „sukcesów�
 
 Krzywa ROC przedstawia w układzie współrzędnych XY wartości
 czułości oraz swoistości dla różnych wartości granicznych.
-Współczynnik AUC (area under curve) to wielkość pola pod
+Współczynnik AUC (*area under curve*) to wielkość pola pod
 krzywą wyrażona w procentach pola kwadratu o boku 100%.
 AUC zawiera się w przedziale 50--100. Im większa wartość tym lepiej.
 Model który klasyfikuje czysto losowo ma wartość AUC równą 50%.
@@ -3236,7 +3140,7 @@ gml.0.coef.df <- tibble::rownames_to_column(gml.0.coef, "Parametr")
 ```
 
 Można obliczyć że (teoretyczne) prawdopodobieństwo wystąpienia osteoporozy
-wyniosło `r prob0`. Krzywa ROC dla modelu zerowego wyląda następująco:
+wyniosło `r prob0`. Krzywa ROC dla modelu zerowego wygląda następująco:
 
 ```{r, message=F}
 pred.0 <- predict(glm.0, type = "response")
@@ -3292,7 +3196,7 @@ kable(gml.1.coef.df, row.names = F,
 Znając wartości współczynników równania można obliczyć wartości $\ln(o)$
 
 ```{r}
-## Prawdoporobieństwa
+## Prawdopodobieństwa
 intercept <- gml.1.coef[1,1]
 beta1 <- gml.1.coef[2,1]
 ## F=1
@@ -3491,7 +3395,7 @@ Należy zastanowić się nad trzema sprawami:
 Najlepiej jakąś zależność. Na przykład: Stress a wypalenie zawodowe;
 satysfakcja zawodowa a retencja; determinanty satysfakcji zawodowej
 
-Może być od biedy opis czegoś lub porówanie czegoś z czymś. Przykłady:
+Może być od biedy opis czegoś lub porównanie czegoś z czymś. Przykłady:
 nadwaga wśród studentów wydziału zdrowia PSW; Analiza porównawcza
 wypalenia zawodowego pielęgniarek
 pracujących w różnych systemach opieki.
@@ -3564,7 +3468,7 @@ czy się bardziej-bardziej  czy bardziej-bardziej-bardziej boi.
 
 ### Skala pomiarowa/inwentarz/kwestionariusz
 
-Ponieważ skala Likerta jest zgruba to 
+Ponieważ skala Likerta jest zgrubna to 
 uważa się powszechnie że lepszy wynik da pomiar 
 wielokrotny. 
 W naukach podstawowych mierzymy (np. linijką) parę razy, a wynik uśredniamy co daje pomiar bardziej 
@@ -4367,7 +4271,7 @@ p.2 <- s0.dep %>%
 p.2
 ```
 
-Cieżką postać depresji wykazuje zaledwie 3% studentów. Należy odrzucić hipotezę
+Ciężką postać depresji wykazuje zaledwie 3% studentów. Należy odrzucić hipotezę
 że depresja stanowi poważny problem wśród studentów RM/PO PSW.
 
 ### Weryfikacja hipotez 2--4
@@ -4375,7 +4279,7 @@ Cieżką postać depresji wykazuje zaledwie 3% studentów. Należy odrzucić hip
 Aby móc zastosować metody tablicy korelacyjnej i testu chi-kwadrat
 oryginalne wartości liczbowe depresji zamieniono
 na skalę porządkową: 0--19 brak/łagodna depresja (B);
-20--25 umiarkowana (Ł); 26--63 cieżka depresja (C).
+20--25 umiarkowana (Ł); 26--63 ciężka depresja (C).
 
 ### Depresja a płeć 
 
