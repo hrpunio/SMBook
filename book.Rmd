@@ -5084,32 +5084,78 @@ SUM(w1p, w2p, w3p, w6, w7) - SUM(w4p, w5p, w8p)
 
 ### Analiza struktury
 
-Wybieramy `Analizy`→`Eksploracja`
+Wybieramy `Analizy`→`Eksploracja`→`Statystyki opisowe`.
+
+W wyświetlonym oknie po lewej deklarujemy co ma być liczone. Wynik
+pojawi się po prawej (por rysunek)
+
+Ustawiamy kursor na zmiennej która nas interesuje i klikamy w strzałkę górną.
+Jeżeli chcemy podzielić wartości zmiennej na grupy według jakiejś 
+zmiennej nominalnej, to ustawiamy kursor na tej zmiennej nominalnej
+(na przykład `plec`) i klikamy strzałkę dolną.
+
+Można analizować wiele zmiennych na raz. Wystarczy w tym celu ustawić
+kursor na zmiennej i kliknąć w odpowiednią strzałkę. Zawartość okna
+wynikowego zostanie automagicznie uaktualniona.
+
+![](./statystyki_opisowe_okno.png)
+Poniżej okien wyboru zmiennych są zakładki określające
+precyzyjnie co ma być obliczone oraz jakie wykresy mają
+zostać wyrysowane. Przykładowo domyślny wydruk nie zawiera
+rozstępu kwartylowego. Żeby go dodać do wyniku należy
+w zakładce `Statystyki` zaznaczyć przycisk `IQR`.
+
 
 ![](./statystyki_opisowe_wynik.png)
 
 ### Analiza zależności: zmienne nominalne
+
+Wybieramy `Analizy`→`Częstości`→`Próby niezależne`.
+
+Podobnie jak w przypadku analizy struktury jest wyświetlana
+lista zmiennych oraz okna i strzałki pozwalające
+wygodnie wybrać to co ma być analizowane. Jest to tak proste
+że wystarczy przyjrzeć się przykładowemu rysunkowi żeby
+wiedzieć jak postępować. Przykładową analizę zależności
+pomiędzy zmiennymi nominalnymi `zamiarOklasa` oraz `staz.klasa` przedstawia rysunek.
 
 ![](./tabele_krzyzowe.png)
 
 
 ### Analiza zależności: zmienna-liczbowa/zmienna nominalna
 
-Wybieramy `Analizy`→`Testy t` oraz `Analizy`→`ANOVA`
+Wybieramy `Analizy`→`Testy t`→`Test t dla prób niezależnych` i/lub
+`Analizy`→`ANOVA`→`Jednoczynnikowa ANOVA`.
+
+Zostanie wyświetlony znajomy interfejs. Wybieramy
+co trzeba. Wynik automagicznie pojawia się w lewym oknie.
+
 
 ![](./testy.png)
 
 ### Analiza zależności: zmienna-liczbowa/zmienna liczbowa
+ 
+Wybieramy `Analizy`→`Regresja`→`Regresja liniowa`
 
-Wybieramy `Analizy`→`Regresja`
+Interfejs podobny do poprzednio opisywanych. Wybieramy
+zmienną zależną (musi oczywiście być liczbowa) klikając w górną strzłkę. 
+Zmienne niezależne mierzone w skali liczbowej
+klikając w środkową strzałkę. Zmienne niezależne mierzone
+w skali nominalnej klikając w dolną strzałkę.
+Wynik automagicznie pojawia się w lewym oknie.
 
 ![](./regresja_liniowa.png)
 
-### Analiza zmienna-liczbowa/zmienna liczbowa przekodowana na nominalną
-
-Wybieramy `Analizy`→`Testy t` oraz `Analizy`→`ANOVA`
-
-
 ### Regresja logistyczna
+
+Wybieramy  `Analizy`→`Regresja`→`Regresja logistyczna`→`Dwie wartości`
+
+Interfejs podobny do analizy regresji. Wybieramy
+zmienną zależną klikając w górną strzłkę. Zmienna ta
+**musi** być zmienną dwuwartościową.
+
+Zmienne niezależne mierzone w skali liczbowej
+wybieramy klikając w środkową strzałkę a zmienne niezależne mierzone
+w skali nominalnej klikając w dolną strzałkę.
 
 ![](./regresja_logistyczna.png)
