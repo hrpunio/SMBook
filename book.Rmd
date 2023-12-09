@@ -1905,7 +1905,8 @@ Zwiększa na niezachorowanie od 300% do 10%.
 ### Tabele korelacyjne 
 
 Łączny rozkład dwóch (dwudzielna) lub większej
-(wielodzielna) liczby zmiennych można przedstawić w tabeli (zwanej
+(wielodzielna albo wielodzielcza) liczby zmiennych można przedstawić
+w tabeli (zwanej
 także korelacyjną). W języku angielskim tego typu 
 tabele noszą nazwę **two-way tables** albo **contingency tables**.
 
@@ -4883,7 +4884,7 @@ Uwaga: Jamovi nie zmieni wartości zmiennej `s1` tylko utworzy nową zmienną
 z przekodowanymi wartościami. Zmienna na podstawie której jest tworzona
 nowa zmienna nazywa się źródłową (`s1` w naszym przykładzie jest źródłowa.)
 
-![](./Przeksztalcenie_1.png)
+![](./przeksztalcenie_0.png)
 
 Wpisujemy sensowną nazwę (na przykład `s1p` od przekodowana). Jak będziemy
 używać sensownych nazwa łatwiej będzie nam się pracowało. Dobrze jest
@@ -4892,7 +4893,7 @@ też podać w opisie co zawiera zmienna.
 Klikamy w pole wyboru na dole (obok napisu `za pomocą przekształcenia`)
 Powinniśmy zobaczyć coś takiego:
 
-![](./Przeksztalcenie_2.png)
+![](./przeksztalcenie_1.png)
 
 Wybieramy `Utwórz nowe przekształcenie`. Wpisujemy sensowną nazwę
 przekształcenia (na przykład `Likert2R5`) oraz formułę przekształcenia:
@@ -4936,7 +4937,7 @@ musimy użyć 4 warunków, które
 są zagnieżdżone jeden w drugim. Można powyższe przepisać, można 
 też skopiować z podręcznika i wkleić do Jamovi.
 
-![](./Przeksztalcenie_3.png)
+![](./przeksztalcenie_1p.png)
 
 Naciskamy Enter i gotowe. Zostaje utworzona zmienna `s1p`
 zawierająca zamiast napisów rangi.
@@ -4952,11 +4953,12 @@ Wybieramy `Likert2R5` bo zmienną `s2` chcemy przekodować dokładnie
 w ten sam sposób jak `s1`. Po wybraniu przekształcenia w oknie danych
 pojawia się nowa zmienna `s2p`
 
+![](./przeksztalcenie_3.png)
+
 W podobny łatwy sposób przekodowujemy `s3` oraz `zo1`, `zo2`, `zo3`
 
 **Uwaga**: polecenie `IF` wpisujemy używając dużych liter. Słowo
 `$source` wpisujemy tak jak jest to zadomonstrowane (`$Source` jest błędem.)
-
 
 Przekodowanie pytanie z możliwością wielokrotnego wyboru jest równie
 proste tyle że pisania jest więcej. Zmienna `wiedza_na_temat_palenia` może zawierać
@@ -4990,6 +4992,10 @@ Przykładowo pierwsza (nazwijmy ją `wiedz1p`) powinna być utworzona w oparciu 
 ```
 CONTAINS("Przewlekła obturacyjna choroba płuc", $source)
 ```
+![](./przeksztalcenie_4.png)
+
+![](./przeksztalcenie_contains.png)
+
 Funkcja CONTAINS wstawi 1 jeżeli `$source` zawiera `Przewlekła obturacyjna choroba płuc`.
 Oczywiście następna zmienna powinna zawierać `Astma oskrzelowa`:
 
@@ -5056,6 +5062,8 @@ W przypadku liczenia łącznej satysfakcji (przy założeniu,
 SUM(s1pr, s2p, s3p)
 ```
 
+![](./zmienna_satysfakcja.png)
+
 Jeżeli nie chcemy sumy ale np. średnią powinniśmy użyć
 
 ```
@@ -5078,19 +5086,30 @@ SUM(w1p, w2p, w3p, w6, w7) - SUM(w4p, w5p, w8p)
 
 Wybieramy `Analizy`→`Eksploracja`
 
+![](./statystyki_opisowe_wynik.png)
+
 ### Analiza zależności: zmienne nominalne
+
+![](./tabele_krzyzowe.png)
+
 
 ### Analiza zależności: zmienna-liczbowa/zmienna nominalna
 
 Wybieramy `Analizy`→`Testy t` oraz `Analizy`→`ANOVA`
 
+![](./testy.png)
+
 ### Analiza zależności: zmienna-liczbowa/zmienna liczbowa
 
 Wybieramy `Analizy`→`Regresja`
+
+![](./regresja_liniowa.png)
 
 ### Analiza zmienna-liczbowa/zmienna liczbowa przekodowana na nominalną
 
 Wybieramy `Analizy`→`Testy t` oraz `Analizy`→`ANOVA`
 
 
+### Regresja logistyczna
 
+![](./regresja_logistyczna.png)
