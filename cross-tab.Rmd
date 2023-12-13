@@ -1,0 +1,234 @@
+---
+title: "Tabele wielodzielcze"
+author:
+- name: Tomasz Przechlewski
+  email: t.plata-przechlewski@psw.kwidzyn.edu.pl
+  affiliation: Powiślańska Szkoła Wyższa (Kwidzyn/Poland)
+date: "Niedatowany/wersja robocza"
+output:
+  html_document: default
+  pdf_document: 
+    latex_engine: xelatex
+subtitle: Podręcznik dla studentów wydziałów nauk o zdrowiu
+description: (c) Tomasz Przechlewski / CC-BY license
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F, warning = F )
+
+## https://pogotowiestatystyczne.pl/jak-analizowac-wyniki-badan-przy-uzyciu-ankiety-wlasnego-autorstwa/
+##
+library("knitr")
+library("ggplot2")
+library("tidyverse")
+library("ggpubr")
+
+```
+
+### Tabele wielodziecze
+
+Łączny rozkład dwóch lub większej
+(wielodzielna albo wielodzielcza) liczby zmiennych można przedstawić
+w tabeli. Taka tabela nazywa się dwudzielcza (dla dwóch zmiennych)
+lub wielodzielcza albo wielodziena (dla więcej niż dwóch zmiennych.) 
+Inne nazwy tych tabel to krzyżowe albo kontyngencji
+(cross-tabulation, contingency **two-way tables**.)
+
+Ograniczmy się do analizy tabel dwudzielnych.
+
+**Przykład: Narciarze Paulinga jeszcze raz**
+
+Eksperyment Paulinga można przedstawić w postaci tablicy dwudzielczej
+(P/C oznacza czy narciarz zażywał witaminę czy placebo; cold/nocold
+czy zachorował czy nie zachorował na katar):
+
+```{r, message=FALSE, echo=FALSE}
+vitC <- read.csv(file='vit_C.csv',sep=';',header=T)
+narciarze <- table(vitC)
+narciarze.table <- addmargins(narciarze)
+kable(narciarze.table, col.names = c('nocold', 'cold', 'razem'))
+```
+
+Taka tabela składa się z wierszy i kolumn. Dolny wiersz (Sum czyli Razem
+po polsku) zawiera łączną liczebność dla wszystkich wierszy w danej kolumnie. Podobnie prawa skrajna kolumna zawiera łączną
+liczebność dla wszystkich kolumn dla danego wiersza. Dolny wiersz/Prawą
+kolumnę nazywamy **rozkładami brzegowymi**.
+Pozostałe kolumny/wiersze (ale bez wartości łącznych) nazywane
+są **rozkładami warunkowymi**. Rozkładów warunkowych jest tyle ile
+wynosi iloczyn $r \times c$ gdzie $r$ to liczba wariantów jednej cechy
+a $c$ to liczba wariantów drugiej cechy.
+
+Przy warunku że narciarz brał witaminę C, `r narciarze[1,1]` takich osób
+nie zachorowało (**nocold**) a `r narciarze[1,2]` zachorowało (**cold**). 
+Drugi rozkład warunkowy: `r narciarze[2,1]` narciarzy, którzy brali placebo
+nie zachorowało, a `r narciarze[2,2]` zachorowało. Są także rozkłady
+warunkowe dla drugiej cechy. W grupie narciarzy, którzy zachorowali
+`r narciarze[1,1]` brało witaminę C, a `r narciarze[2,1]` brało placebo.
+Wreszcie w grupie narciarzy, którzy nie zachorowali
+`r narciarze[2,1]` brało witaminę C, a `r narciarze[2,2]` brało placebo.
+Rozkładów warunkowych jest 4 bo obie cechy mają po dwa warianty. Jest
+to najmniejsza możliwa tabela wielodzielcza.
+
+Zamiast liczebności można posługiwać się odsetkami (procentami):
+
+
+```{r}
+narciarze.total <- sum(narciarze)
+narciarze.p <- narciarze/narciarze.total *100
+
+narciarze.table.p <- addmargins(narciarze.p)
+kable(narciarze.table.p)
+```
+
+Narciarzy którzy brali witaminę C nie nie zachorowali stanowi `r  narciarze.table.p[1,1]`%
+wszystkich narciarzy. Mało przydatne...
+
+Ciekawsze jest obliczenie procentów każdego wiersza osobno, tj. dzielimy
+liczebności w każdej kolumnie przez liczebności rozkładu brzegowego (wartości
+ostatniej kolumny):
+
+```{r}
+
+narciarze.p <- proportions(narciarze, margin = 1)
+narciarze.p.m <- addmargins(narciarze.p, margin = 1)
+n.m <- margin.table(narciarze,2) /narciarze.total
+narciarze.x <- cbind(rbind(narciarze.p, n.m), c(1,1,1)) * 100
+kable(narciarze.x)
+```
+
+Otrzymaliśmy ryzyka zachorowania na katar (lub nie zachorowania). Ryzyko
+zachorowania dla całej grupy wynosi `r narciarze.x[3,2]`% a nie zachorowania
+`r narciarze.x[3,1]`%. Jest przyznajmy całkiem **zdroworozsądkowym założeniem**
+(uczenie hipotezą statystyczną), że jeżeli przyjmowanie witaminy nie ma związku
+z zachorowaniem lub nie na katar, to w grupie tych co brali i tych co nie brali
+powinniśmy mieć identyczne rozkłady warunkowe równe rozkładowi brzegowemu.
+Czyli powinno przykładowo zachorować `r  narciarze.x[3,2]`% narciarzy, którzy
+brali witaminę C a widzimy , że zachorowało jedynie `r narciarze.x[1,2]`%.
+
+Na oko księgowego witamina C działa (bo są różnice), ale dla statystyka liczy się 
+czy ta różnica jest na tyle duża, że (z założonym prawdopodobieństwem) 
+można wykluczyć działanie przypadku.
+
+Rozumowanie jest następujące: jeżeli prawdopodobieństwo wystąpienia 
+tak dużej różnicy jest małe, to cechy nie są niezależne. 
+Jest to istota i jedyny wniosek z czegoś co się nazywa 
+testem istotności-chi-kwadrat. 
+Test chi-kwadrat porównuje liczebności tablicy wielodzielnej z idealną-tablicą-wielodzielną, która zakłada niezależność jednej zmiennej od drugiej.
+
+Można udowodnić, że taka tablica powstanie przez przemnożenie dla 
+każdego elementu tablicy odpowiadających mu wartości brzegowych 
+a następnie podzieleniu tego przez łączną liczebność (czyli przykładowo pierwszy
+element poniższej tablicy to `r narciarze.table[3,1]` pomnożone przez
+`r narciarze.table[1,3]` i podzielone przez `r narciarze.table[3,3]`; proszę
+sprawdzić,
+że jest to `r narciarze.table[3,1] * narciarze.table[1,3] / narciarze.table[3,3]`):
+
+
+```{r, message=FALSE, echo=FALSE}
+chi_skiers <- chisq.test(narciarze)
+narciarze.expected <- chi_skiers$expected
+narciarze.ex.table <- addmargins(narciarze.expected)
+
+chipv <- chi_skiers$p.value
+chipv.txt <- sprintf("%f", chipv)
+kable(narciarze.ex.table)
+```
+
+Proszę
+zwrócić uwagę że **rozkłady brzegowe** są identyczne, identyczna
+jest też łączna liczebność. Różnią się tylko rozkłady warunkowe (które nie są
+liczbami całkowitami ale tak ma być--nie jest to błąd)
+
+Za pomocą testu Chi-kwadrat obliczamy jakie jest prawdopodobieństwo, wystąpienia
+tak dużych lub większych różnic. Wynosi ono `r chipv.txt`.
+Czyli wystąpienie tak dużych różnic
+pomiędzy **oczekiwanymi** (przy założeniu o niezależności zmiennych)
+liczebnościami
+a obserwowanymi liczebnościami zdarza się około 4 razy na 100.
+
+Jeszcze raz przypominamy ideę testu: jeżeli prawdopodobieństwo zaobserwowanych
+różnic jest małe to zakładamy że 
+
+* albo mamy pecha i pięć razy podrzucając monetą zawsze nam spadła
+reszka (prawdopodobieństwo około 0,03), albo
+
+* że założenie co do niezależności jest fałszywe. 
+
+Statystyk zawsze wybierze
+drugie. Pozostaje tylko ustalenie co to znaczy **małe**.
+
+Małe to takie które jest mniejsze od arbitralnie przyjętego
+przez statystyka. Zwykle jest to 0,05 lub 0,01 (czasami 0,1)
+co oznacza że odrzucając założenie o braku związku pomiędzy
+katarem a braniem witaminy C pomylimy się pięć lub raz na 100.
+
+**Uwaga**: proszę zwrócić uwagę że wniosek z testu niezależności jest
+słabszy niż z porówania ryzyk. Tam mamy informację że zależność istnieje 
+i oszacowaną jej wielkość (np. za pomocą ryzyka względnego) tutaj tylko
+zweryfikowaliśmy fakt czy obie zmienne są niezależne czy też nie.
+
+**Przykład: palenie a status społeczno-ekonomiczny**
+
+Dla pewnej grupy osób odnotowujemy ich status-społeczno-ekonomiczny
+(wysoki/**high**, średni/**middle**, niski/**low**)
+oraz status-względem-palenia 
+(wartości: pali/**current**, palił-nie-pali/**former**, nigdy-nie-palił/**never**). 
+Obie zmienne są nominalne, obie mają po trzy wartości. Można
+poklasyfikować wszystkich badanych w następujący sposób:
+
+```{r message=FALSE, echo=F}
+smokerData <- read.csv(file='smoker.csv',sep=';',header=T)
+#summary(smokerData)
+#nrow(smokerData)
+#
+smoke <- table(smokerData)
+
+smoke.table <- addmargins(smoke)
+kable(smoke.table)
+```
+
+Uwaga: status-społeczno-ekonomiczny to powiedzmy miara prestiżu używana w socjologii
+(można na Wikipedii doczytać co to dokładnie jest)
+
+Tym razem tabela składa się z 3 wierszy i 3 kolumn (ostatni wiersz/kolumna się
+nie liczą bo to sumy--rozkłady brzegowe)
+
+Przedstawmy tą tabelę w postaci udziałow procentowych sumujących się
+dla każdego wiersza osobno do 100% (tj. dzielimy
+liczebności w każdej kolumnie przez liczebności rozkładu brzegowego (wartości
+ostatniej kolumny):
+
+```{r}
+smoke.total <- sum(smoke)
+smoke.p <- proportions(smoke, margin = 1)
+smoke.p.m <- addmargins(smoke.p, margin = 1)
+n.m <- margin.table(smoke,2) /smoke.total
+smoke.x <- cbind(rbind(smoke.p, n.m), c(1,1,1)) * 100
+kable(smoke.x)
+```
+
+Rozumowanie jest identyczne jak dla narciarzy Pauliga. Jeżeli nie ma zależności
+pomiędzy paleniem a statusem to procenty w ostatnim wierszu powinny
+być identyczne jak w wierszach 1--3 (nagłówka nie liczymy). Tym idealnym 
+procentom odpowiadają następujące liczebności:
+
+
+```{r, message=FALSE, echo=FALSE}
+chi_smokers <- chisq.test(smoke)
+smokers.expected <- chi_smokers$expected
+smokers.ex.table <- addmargins(smokers.expected)
+
+chipv <- chi_smokers$p.value
+chipv.txt <- sprintf("%f", chipv)
+kable(smokers.ex.table)
+```
+
+Wartość prawdopodobieństwa dla testu chi-kwadrat określająca, że przy założeniu niezależności obu zmiennych tak duża różnica między liczebnościami rzeczywistymi a idealnymi 
+(porównaj stosowne tabele wyżej) jest dziełem przypadku wynosi `r chipv.txt`.
+Jest to prawdopodobieństwo tak małe, że statystyk odrzuca założenie o niezależności
+statusu i palenia (myląc się w przybliżeniu `r chipv.txt` ≈ raz na tysiąc)
+
+
+
+
+

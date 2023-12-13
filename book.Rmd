@@ -1327,15 +1327,15 @@ p1
 
 Wartość średnią wyznaczamy na podstawie jakiejś konkretnej **metody**.
 Wydaje się na podstawie powyższych eksperymentów, że z dobrym skutkiem
-możemy jako metodą wykorzystać średnią-z-próby.
+możemy jako metodę wykorzystać **średnią-z-próby**.
 
-W ogólności metodą taką, formalnie funkcję elementów z próby, nazywa się
+W ogólności taką metodą, która formalnie jest funkcją elementów z próby, nazywa się
 w statystyce **estymatorem**. Warto to pojęcie zapamiętać. Wnioskujemy
 o wartości parametru w populacji posługując się estymatorem.
 
 Kontynuując wnioski z eksperymentu należy zauważyć, że
 wszystkie średnie-ze-średnich (bez względu na liczebność próby) są zbliżone do wartości
-prawdziwej (to się nazywa **nieobciążoność**);
+prawdziwej (to się nazywa **nieobciążoność** estymatora);
 Mówiąc innymi słowy jeżeli będziemy oceniać wartość prawdziwej średniej na podstawie próby,
 a naszą ocenę powtórzymy wielokrotnie,
 to średnia będzie zbliżona do wartości prawdziwej (a nie np. niższa czy wyższa)
@@ -1345,13 +1345,15 @@ Jeżeli rośnie liczebność próby to zmienność wartości średniej-w-próbie
 idzie  prawdopodobieństwo, że wartość oceniona na podstawie
 średniej z próby będzie zbliżona do wartości szacowanego parametru rośnie (to się nazywa **zgodność**).
 Co więcej dobrym przybliżeniem zmienności średniej-w-próbie
-jest prosta formuła $s/\sqrt{n}$ gdzie $n$ jest liczebnością próby. 
+jest prosta formuła $s/\sqrt{n}$ gdzie $n$ jest liczebnością próby a $s$ jest odchyleniem
+standardowym w populacji z której pobrano próbę. 
 
-Jeżeli mamy dwa estymatory do oszacowania parametru, oba są **nieobciążone** oraz **zgodne**, to który wybrać?
+Jeżeli mamy dwa rózne estymatory służące do oszacowania parametru, 
+oba są **nieobciążone** oraz **zgodne**, to który wybrać?
 Ten która ma **mniejszą wariancję**. Taki estymator nazywa się **efektywny**.
 
 Estymator zatem powinien być **nieobciążony**, **zgodny** oraz **efektywny** (czyli mieć
-małą wariancję). Można matematycznie udowodnić, że jakiś estymator ma tak małą wariancję, że
+małą wariancję). Można matematycznie udowodnić, że pewien estymator ma tak małą wariancję, że
 niemożliwe jest wynalezienie czegoś jeszcze bardziej efektywnego. Takim estymatorem
 średniej w populacji  jest średnia z próby...
 
@@ -1368,8 +1370,8 @@ wN <- length(w)
 ```
 
 W wyborach samorządowychych w Polsce w roku 2018 o mandat radnego
-sejmików wojewódzkich ubiegało się `r wN`kandydatów. 
-Znamy szczegółowe dane odnośnie wieku każdego kandydata
+sejmików wojewódzkich ubiegało się `r wN` kandydatów. 
+Znamy szczegółowe dane odnośnie wieku każdego kandydata,
 bo to zostało publicznie podane przez Państwową Komisję Wyborczą.
 Obliczamy (prawdziwą) średnią, odchylenie standardowe 
 i współczynnik zmienności wieku kandydatów:
@@ -1495,7 +1497,6 @@ Obserwujemy to samo co w przypadku wagi rugbystów: im większa próba tym
 dokładniejsza wartość średniej wieku. Bez względu na wielkość próby przeciętnie
 otrzymujemy prawdziwą wartość średniej.
 
-
 Wniosek: precyzja wnioskowania zwiększa się wraz z liczebnością próby; tym szybciej
 im rozproszenie w populacji generalnej jest mniejsze. Żeby z dużą dokładnością
 wnioskować o średniej dla dużej populacji wcale nie trzeba pobierać 
@@ -1507,9 +1508,10 @@ dużej próby (w ostatnim przykładzie było to 1% całości).
 przyporządkowanie kolejnym wartościom zmiennej odpowiadających im liczebności. 
 
 
-Załóżmy że istnieje zapotrzebowanie społeczne na  wiedzę na temat ryzyka średnich opóźnień. Możemy
-to jak widać łatwo liczyć ale jednocześnie jest to kłopotliwe. Należy do tego mieć zbiór
-272 tys liczb. **Rozkład teoretyczny** to matematyczne uogólnienie **rozkładu empirycznego**.
+Załóżmy że istnieje zapotrzebowanie społeczne na  wiedzę na temat wieku kandydatów
+na radnych. Możemy to jak widać łatwo liczyć ale jednocześnie jest to kłopotliwe. 
+Należy do tego mieć zbiór ponad 7 tys liczb. 
+**Rozkład teoretyczny** to matematyczne uogólnienie **rozkładu empirycznego**.
 Jest to model matematyczny operujący pojęciem (ściśle sformalizowanym) **prawdopodobieństwa**
 (zamiast liczebności). **Rozkład teoretyczny** jest: 
 
@@ -1520,9 +1522,9 @@ Jest to model matematyczny operujący pojęciem (ściśle sformalizowanym) **pra
 Żeby było ciekawiej istnieje dokładnie jeden **rozkład  teoretyczny**, który z dobrą dokładnością
 opisuje rozkłady empiryczne będące wynikiem powyższej zabawy. 
 Ten rozkład (zwany **normalnym**)
-zależy tylko od dwóch parametrów: średniej i rozproszenia, gdzie średnia będzie
-równa (prawdziwej) średniej w populacji a rozproszenie wartości
-rozproszenia w populacji podzielonej przez pierwiastek z wielkości próby.
+zależy tylko od dwóch parametrów: średniej i odchylenia standardowego, gdzie średnia będzie
+równa (prawdziwej) średniej w populacji a odchylenie standardowe 
+równe odchyleniu standardowemu w populacji podzielonemu przez pierwiastek z wielkości próby.
 
 Dla próby 40-elementowej (wiek kandydatów) wygląda to tak:
 
@@ -1605,6 +1607,81 @@ Uogólnieniem teoretycznym pojęcia **zmiennej statystycznej**, które do tej po
 używaliśmy jest **zmienna losowa**, zmienna której wartości są liczbami a realizują się
 z określonym prawdopodobieństwem np. określonym przez rozkład normalny.
 
+**Przykład: szacowanie odsetka kobiet**
+
+```{r}
+r <- read.csv("kandydaci_ws_2018_4.csv", sep = ';', dec = ",",  header=T, na.string="NA") %>%
+    mutate (plec = recode(plec, "K"=1, "M"=0))
+
+p.k <- mean(r$plec)
+
+w <- as.vector(na.omit(r$plec))
+wN <- length(w)
+
+x020 <-mks(20,wN)
+##summary(x020)
+x020.mean <- mean(x020)
+
+x120 <-mks(120,wN)
+##summary(x120)
+x120.mean <- mean(x120)
+
+x420 <-mks(420,wN)
+x420.mean <- mean(x420)
+##summary(x420)
+```
+
+Dane dotyczące kandydatów zawierają także płeć. Ktoś może być ciekaw
+jaki był odsetek kobiet w tej grupie. Taki parametr nazywa się proporcją
+albo ryzykiem, a potocznie i niefachowo procentem. 
+Matematycznym modelem jest **zmienna dwuwartościowa**, która
+z określonym prawdopodobieństwem przyjmuje wartość `kobieta`. 
+Obliczmy
+empiryczną wartość tego prawdopodobieństwa jako liczbę kobiet do liczby
+wszystkich kandydatów. Wartość tego parametru wynosi `r p.k` (albo 
+`r round(p.k *100, 2)`%). 
+Potraktujmy to jako prawdziwą wartość prawdopodobieństwa (p), że
+kandydat jest kobietą i empirycznie sprawdźmy czy możemy szacować
+o prawdziwej wartości tego parametru 
+używając (jako estymatora żeby się przyzwyczajać do nowych terminów) proporcji z próby.
+Tradycyjnie powtarzamy eksperyment 1000 razy 
+dla trzech różnych wielkości próby. Rozkład otrzymanych wartości przedstawia rysunek.
+
+
+
+```{r}
+all.samples <- data.frame(x020, x120, x420)
+
+p1 <- all.samples %>%
+  pivot_longer(cols = c(x020, x120, x420), names_to = 'k', values_to = 'v') %>%
+  ggplot(aes(x=v)) +
+  facet_wrap(~ k) +
+  geom_histogram(binwidth=.02, fill="steelblue") +
+  geom_vline(xintercept = p.k, colour="forestgreen", size=.4) +
+  ggtitle("rozkład wielkości p dla różnej wielkości próby")
+p1
+
+```
+
+Wnioski: 
+
+* Dla próby 20 elementowej rozkład nie przypomina rozkładu normalnego
+
+* Dla prób 120 i 420 elementowej rozkład jest podobny do normalnego
+
+* Zmienność estymatora maleje wraz ze wzrostem liczebności próby; 
+każe nam to przypuszczać (i tak jest w istocie) że jest on zgodny
+
+* W każdym przypadku średnia z 1000 eksperymentów jest zbliżona do wartości prawdziwej
+ każe nam to przypuszczać (i tak jest w istocie) że estymator jest nieobciążony
+ 
+Rozkład normalny jest tak magiczny że nawet jeżeli zmienna której parametr
+szacujemy nie ma rozkładu zbliżonego
+do normalnego (jak w przypadku zmiennej która przyjmuje tylko dwie wartości)
+to i tak estymator tego parametru będzie normalny. Co najwyżej będziemy
+potrzebowali większej próby żeby znormalniał (jak w opisywanym przykładzie)
+ 
+
 ## Wnioskowanie statystyczne (*interferance*)
 
 Analizując dane uzyskane z próby celem jest ich **uogólnienie** na całą populację.
@@ -1619,8 +1696,8 @@ Do oceny tej wiarygodności można użyć wariancji-średniej-z-próby (która n
 Jeżeli wariancja błędu jest duża, to w pojedynczej próbie mogą wystąpić wartości
 znacznie różniące się od prawdziwej średniej; jeżeli jest mała to takie bardzo różniące
 się od prawdziwej średniej wartości mają małe szanse na zaistnienie. Do tego w przypadku rozkładu
-normalnego wiemy ze wariancja błędu = $s/\sqrt(n)$
-(gdzie $s$ jest wariancją w populacji a $n$ wielkością próby.)
+normalnego wiemy ze wariancja błędu jest równa $s^2/n$
+(gdzie $s^2$ jest wariancją w populacji a $n$ wielkością próby.)
 
 W ramach wnioskowania stosowane są trzy metody (podejścia): 
 
@@ -1636,18 +1713,21 @@ Szacujemy średnią (inny parametr) i tę wartość uznajemy za wartość prawdz
 dokładność szacunku jest nieokreślona. Inaczej mówiąc wartość **estymatora**
 dla konkretnej próby przyjmujemy za ocenę parametru.
 
+Estymatorem punktowym średniej jest średnia z próby a estymatorem
+punktowym proporcji/ryzyka jest proporcja/ryzyko z próby.
+
 ### Estymacja przedziałowa
 
 Nie można ustalić prawdopodobieństwa popełnienia 
 błędu dla dokładnej wartości parametru (co wynika z właściwości matematycznych
-modelu) ale można dla dowolnego przedziału od--do. 
+modelu), ale można dla dowolnego przedziału od--do. 
 
 Czyli nie można ustalić, że z prawdopodobieństwem 95%
 oszacujemy wartość średnią czegoś jako 5,000000,
 ale można z prawdopodobieństwem 95% oszacować
 **przedział** w którym znajdzie się średnia (np że będzie to na przykład 4,9--5,1).
 
-Estymacja przedziałowa to oszacowanie przedziału wartości od-do,
+Estymacja przedziałowa to oszacowanie przedziału wartości od--do,
 który z zadanym z góry prawdopodobieństwem zawiera prawdziwą wartość średniej.
 
 Z góry wyznaczone prawdopodobieństwo nazywa się
@@ -1659,12 +1739,11 @@ Większość analiz statystycznych polega na porównaniu. W wyniku
 tego porównania otrzymujemy liczbę. Załóżmy, że mamy dwie próby dotyczące wieku
 kandydatów na radnych do sejmików wojewódzkich z roku 2018 (średnia 46,1) 
 oraz z roku 2014 (47,2). Różnica wynosi 1,1 lat i może być spowodowana błędem przypadkowym
-(tj. gdybyśmy wylosowali jeszcze raz dwie próby to wynik byłby zupełnie odmienny np 46,9 vs 46,5)
+(tj. gdybyśmy wylosowali jeszcze raz dwie próby, to wynik byłby zupełnie odmienny np 46,9 vs 46,5)
 i/lub wynikać z tego że faktycznie w roku 2014 kandydaci byli starsi. 
 
-Formalnie stawiamy **hipotezę** że różnica średnich wynosi zero. Jest to tzw. **hipoteza zerowa**.
-Niezbędne jest także postawienie **hipotezy alternatywnej** którą może być proste zaprzeczenie
-zerowej. Zapisuje się to następująco:
+Formalnie stawiamy **hipotezę**, że różnica średnich wynosi zero. Jest to tzw. **hipoteza zerowa**. Niezbędne jest także postawienie **hipotezy alternatywnej**,
+którą może być proste zaprzeczenie zerowej. Zapisuje się to następująco:
 
 $H_0$: różnica średnich wieku wynosi zero ($m_1 = m_2$)
 
@@ -1673,32 +1752,36 @@ $H_1$: różnica średnich wieku jest różna od zera ($m_1 \not= m_2$)
 Hipotezy sprawdzamy wykorzystując **test statystyczny** czyli funkcję 
 której wartości zależą wartości testowanych parametrów (w tym przypadku $m_1$ oraz $m_2$)
 
-Nie jest chyba wielkim zaskoczeniem że testem dla różnicy średnich jest
-różnica średnich w próbie. Całkiem zdroworozsądkowo możemy przyjąć, że duże różnice
+Nie jest chyba wielkim zaskoczeniem, że testem dla różnicy średnich jest
+różnica średnich w próbie. Całkiem **zdroworozsądkowo** możemy przyjąć, że duże różnice
 świadczą na rzecz hipotezy alternatywnej a małe na rzecz hipotezy zerowej. 
 
-Duża różnica pomiędzy **hipotezą** a wynikiem z próby może wynikać
+Duża różnica pomiędzy **hipotezą** a wynikiem z próby może wynikać z tego, że
 
-1. z tego że pechowo trafiła nam się nietypowa próba, który zdarza się rzadko (rozkład normalny)
+1. pechowo trafiła nam się nietypowa próba, który zdarza się rzadko (rozkład normalny)
 
-2. hipoteza jest fałszywa, średnie mają inną wartość niż zakładamy w $H_0$
+2. hipoteza jest fałszywa, średnie mają inną wartość niż zakładamy w hipotezie zerowej
 
 Statystyk zawsze wybierze drugą wersję. Pozostaje tylko ustalić (dla statystyka) co to jest rzadko?
 
-Rzadko to rzadziej niż z góry ustalone prawdopodobieństwo otrzymania różnicy którą otrzymaliśmy
-w próbie lub większej (coś jak założenie że zrealizował się najlepszy z najgorszych scenariuszy).
+Rzadko to z prawdopodobieństwem mniejszym niż z góry ustalone prawdopodobieństwo 
+otrzymania różnicy (zakładające że hipoteza zerowa jest prawdziwa),
+którą otrzymaliśmy w próbie lub większej 
+(coś jak założenie że zrealizował się najlepszy z najgorszych scenariuszy).
 
 Przyjmijmy przykładowo że prawdopodobieństwo wystąpienia różnicy 1,1 lat (i większej) oszacowane
-na podstawie odpowiedniego modelu matematycznego (rozkład normalny) wynosi 0,3 co znaczy że coś takiego
+na podstawie odpowiedniego modelu matematycznego (rozkład normalny) wynosi 0,3 
+co znaczy że coś takiego
 zdarza się względnie często -- trzy razy na 10 pobranych prób.
 
 Załóżmy z kolei że, ta różnica wyniosła 3,2 lata. Prawdopodobieństwo 
 wystąpienia takiej różnicy (i większej) wynosi 0,009 co znaczy że coś takiego
 zdarza się względnie rzadko -- 9 razy na tysiąc prób.
 
-Przyjmując, że możemy się mylić 5 razy na 100 w pierwszym przypadku statystyk powie że nie ma
-podstaw do odrzucenia hipotezy $H_0$. Różnica 1,1 lat wynika z przypadku. W drugim wypadku
-powie że hipoteza jest fałszywa bo zdarzyło się coś co nie powinno się zdarzyć.
+Przyjmując, że możemy się mylić 5 razy na 100 w pierwszym przypadku statystyk powie,
+że nie ma podstaw do odrzucenia hipotezy $H_0$. 
+Różnica 1,1 lat wynika z przypadku. W drugim wypadku
+powie że hipoteza jest fałszywa, bo zdarzyło się coś co nie powinno się zdarzyć.
 
 Prawdopodobieństwo ,,graniczne'' ustalamy z góry i
 nazywa się ono **poziomem istotności**.  Określa ono jak często
@@ -1710,10 +1793,25 @@ statystycznych nie określa się tego prawdopodobieństwa a w związku z tym nie
 **przyjąć hipotezy zerowej** (bo nie znamy ryzyka popełnienia błędu).
 
 W konsekwencji hipotezę zerową albo się odrzuca albo nie ma podstaw do odrzucenia.
-Wniosek cokolwiek niekonkluzywny ale tak jest. 
+Wniosek cokolwiek niekonkluzywny, ale tak jest. 
 
 Dlatego też często ,,opłaca się'' odrzucić hipotezę zerową, bo taki rezultat jest
 ,,bardziej konkretny''.
+
+### Testy nieparametryczne
+
+Można testować hipotezy nt. wartości parametrów ale można też testować
+przypuszczenia o charakterze mniej konkretnym. Na przykład, że dwie zmienne
+są niezależne (co to znaczy wyjaśniono w następnym rozdziale), albo
+że dwa rozkłady są podobne do siebie (rozkłady nie średnie).
+Takie hipotezy/testy określa się jako **nieparametryczne**.
+Przykładami są testy niezależności chi-kwadrat albo normalności
+Shapiro-Wilka (opisane w następnym rozdziale)
+
+Oczywiste ale podkreślmy: przypuszczenia o charakterze nieparametrycznym 
+możemy tylko testować (sprawdzać hipotezy);
+nie obliczamy wtedy ani ocen ani nie wyznaczamy przedziałów ufności 
+z oczywistych względów.
 
 ## Słownik terminów które warto znać
 
@@ -1738,6 +1836,8 @@ Poziom ufności; prawdopodobieństwo, że przedział ufności zawiera prawdziwą
 oznaczany jako $1- \alpha$; zwykle 0,95
 
 
+
+
 # Analiza współzależności pomiędzy zmiennymi
 
 Pomiędzy zjawiskami występują związki (zależności.) Nauki formułują te związki
@@ -1754,14 +1854,21 @@ Związki między cechami mogą być: **funkcyjne** (nauki przyrodnicze) -- warto
 **stochastyczne** -- wartościom jednej zmiennej odpowiadają z pewnym
 przybliżeniem wartości innej zmiennej.
 
-Problem: czy istnieje związek (zależność) pomiędzy cechami? Dla uproszczenie
-pomiędzy dwoma cechami, np. czy istnieje związek pomiędzy paleniem
-a chorobą nowotworową, wiekiem a prawdopodobieństwem zgonu z powodu COVID19 itd
+Problem: czy istnieje związek (zależność) pomiędzy cechami? 
+Przykładowo czy istnieje związek pomiędzy paleniem (przyczyna)
+a chorobą nowotworową (skutek), wiekiem a prawdopodobieństwem zgonu z powodu COVID19 itd
 
 Jaki jest charakter zależności? Jaka jest siła zależności?
 
 Rodzaj metod zastosowanej do empirycznej weryfikacji zależy 
 w szczególności od sposobu pomiaru danych (nominalne, porządkowe, liczbowe.)
+co pokazano na diagramie.
+
+![](./DiagramMetod.png)
+
+Optymistyczną informacją jest że metod (oznaczonych krojem pogrubionym na diagramie), 
+które omawiamy dalej w rodziale, jest raptem siedem czyli niedużo.
+
 
 
 ## Dwie zmienne nominalne
@@ -1781,35 +1888,38 @@ Eksperyment Paulinga polegał na tym, że podzielił 280 narciarzy na dwie grupy
 po 140 osób; przez 5--7 dni podawał witaminę C jednej grupie
 oraz placebo drugiej grupie;
 obserwował zachorowania na przeziębienie przez następne dwa tygodnie.
+Jeden narciarz nie dokończył eksperymentu. Historia milczy dlaczego :-)
 
 ![](./Pauling.jpg){width=50%}
 
 
-
-Jeden narciarz nie dokończył eksperymentu. Historia milczy dlaczego :-)
-
-W eksperymencie Paulinga w grupie 139 narciarzy, którym podano witaminę C
-(grupa C)
-zachorowało 17, a w grupie 140 narciarzy którym podano placebo (grupa P)
+W grupie 139 narciarzy, którym podano witaminę C
+(grupa C) zachorowało 17. W grupie 140 narciarzy, którym podano placebo (grupa P)
 zachorowało 31. Zatem:
 
 * Ryzyko zachorowania w grupie C wyniosło 17/139 = 12,2%.
 * Ryzyko zachorowania w grupie P wyniosło 31/140 = 22,14%
 
-Prostymi miarami oceny siły zależności mogą być: różnica 
-ryzyk (**risk difference**)
-ryzyko względne (**relative risk**) oraz iloraz szans (**odds ratio**).
+Na tzw. chłopski rozum jeżeli witamina C **nie działa** to powinien
+zachorować ten sam odsetek narciarzy w obu grupach. 
+A tak nie jest jak widać...
+
+Prostymi miarami oceny siły zależności mogą być: 
+
+* różnica  ryzyk (**risk difference**)
+* ryzyko względne (**relative risk**), oraz 
+* iloraz szans (**odds ratio**).
 
 Jeżeli $r_e$ oznacza ryzyko w grupie eksperymentalnej 
 (test group; grupa narażona/exposed group),
 a $r_k$ w grupie kontrolnej (control group; grupa nienarażona/unexposed), 
 to **różnica ryzyk** to po prostu $r_e - r_k$.
-W przykładzie będzie to -9,94%
+W przykładzie będzie to $22,14 - 12,2 = -9,94$%
 Ta miara aczkolwiek prosta jest rzadko stosowana. 
 
 Znacznie częściej używa się **ryzyka względnego** definiowanego jako
-$RR = r_e/r_k$. W przykładzie będzie to 12,2/22,14 = 0,55. Podanie witaminy C
-zmniejsza ryzyko o prawie połowę. 
+$RR = r_e/r_k$. W przykładzie będzie to $12,2/22,14 = 0,55$. 
+Podanie witaminy C zmniejsza ryzyko o prawie połowę. 
 Oczywiste jest że $RR < 1$ oznacza zmniejszenie
 ryzyka; $RR > 1$ zwiększenia a $RR = 1$ oznacza brak zależności.
 
@@ -1818,8 +1928,7 @@ pojęcia szansa/szansy (**odds**) definiowanego
 jako iloraz sukcesów do porażek. 
 
 Przykładowo jeżeli w dwukrotnym rzucie monetą otrzymano orła i reszkę to ryzyko
-otrzymania orła wynosi 1/2 = 0,5 a szansa otrzymania orła wynosi 1.
-
+otrzymania orła wynosi 1/2 = 0,5 a szansa otrzymania orła wynosi 1/1 = 1.
 
 **Przykład: Narciarze Paulinga cd** 
 
@@ -1831,7 +1940,7 @@ różni się znacznie od prawdopodobieństwa, ale dla małych ryzyk obie miary m
 
 Jeżeli $o_e$ oznacza szanse w grupie eksperymentalnej 
 a $o_k$ w grupie kontrolnej, to **iloraz szans** (*odds ratio*), jest
-definiowany jako stosunek $\textrm{OR} = o_e/o_t$.
+definiowany jako stosunek $\textrm{OR} = o_e/o_k$.
 
 Zatem iloraz szans
 dla narciarzy wyniesie 13,9/28,44 = 0,48.
@@ -1856,118 +1965,93 @@ dwudzielnej o wymiarach $2\times 2$, którą można przestawić następująco
 | grupa eksperymentalna | c      |  d       |
 
 
+Dla danych w tej postaci: 
 
-Dla danych w tej postaci: $RR = c(a+b)/a(c+d)$ oraz $\textrm{OR} = (ad)/ (bc)$ 
+* $\textrm{RR} = c(a+b)/a(c+d)$ oraz
+* $\textrm{OR} = (ad)/ (bc)$ 
 
-### Przedziały ufności dla błędu względnego i ilorazu szans
+czyli dla eksperymentu Paulinga:
 
-Dla dużej próby można założyć, że $\ln(RR)$  ma rozkład normalny
-o odchyleniu standardowym  równym: 
-
-$$se_{RR} (\ln(RR)) = \sqrt{1/a + 1/c - 1/(a+b) - 1/(c+d)},$$
-
-stąd 95% przedział określony jest przez: 
-
-$$rr - 1,96 se_{RR} < \ln(RR) < RR + 1,96 se_{RR},$$
-albo po przekształceniu:
-
-$$\exp(\ln(RR) \pm 1,96 se_{RR})$$ 
-
-(dla przypomnienia $\exp(x)$ to $e^x$)
+|                       | katar  |  zdrowy  |
+|-----------------------|--------|----------|
+| grupa C               | 17     |  122     |
+| grupa P               | 31     |  109     |
 
 
-Dla dużej próby można założyć, że $\ln(OR)$  ma rozkład normalny
-o odchyleniu standardowym 
-równym: $se_{OR} (\ln(OR)) = \sqrt{1/a + 1/b + 1/c + 1/d}$,
-stąd 95% przedział określony jest
-przez: $OR - 1,96 se_{OR} < \ln(OR) < OR + 1,96 se_{OR}$,
-albo po przekształceniu: $\exp(\ln(OR) \pm 1,96 se_{OR})$.
 
-Jeżeli przedział ufności zawiera 1 to świadczy to o 
-braku zależności (na 95% poziomie ufności).
+### Przedziały ufności dla ryzyka względnego oraz ilorazu szans
+
+Ryzyko, ryzyko względne czy iloraz szans to parametry podobne do procentu kobiet
+wśród kandydatów na radnych z przykładu w poprzednim rozdziale. Wiemy,
+że estymatorem punktowym proporcji jest proporcja z próby. Nie będzie
+wielkim odkryciem, że estymatorem punktowym ryzyka jest ryzyko z próby,
+ryzyka względnego/ilorazu szans zaś ryzyko względne/iloraz szans z próby.
+
+Standardem jest obliczanie dla ryzyka względnego oraz ilorazu szans
+oprócz ocen punktowych także
+przedziałów ufności czyli podawania dwóch wartości, pomiędzy którymi
+z zadanym prawdopodobieństem znajduje się nieznana wartość szacowanego
+parametru.
 
 Przykładowo (kontynuując eksperyment Paulinga)
 
-$\ln(OR) =  \ln(0,48) = -0.7339691$ oraz
-$se_{OR} (\ln(OR)) = 0.3293214$ stąd 
-$-0,7339691 \pm 1,96 \cdot 0.3293214$. 
+```{r}
+b_t <- 122
+a_t <- 17
+d_t <- 109
+c_t <- 31
 
-Końce przedziałów: [-1.379439044; -0.0884991560]; 
+## RR
+rr.e <- (a_t/(a_t + b_t)) 
 
-Ostatecznie: [0,2517; 0,9153]
+rr.t <- (c_t /(c_t + d_t))
 
-Przedział nie zawiera 1; zatem branie witaminy C zmniejsza szanse na zachorowanie;
+rr <- rr.e/rr.t
+
+seRR <- sqrt(1 /a_t + 1/c_t - 1/(a_t+b_t) - 1/(c_t+d_t))
+
+rr_low <- exp(log(rr) - 1.96 * seRR)
+rr_upr <- exp(log(rr) + 1.96 * seRR)
+
+## OR
+or <- (a_t * d_t )/ (b_t * c_t )
+
+seOR <- sqrt(1/a_t + 1/b_t + 1/c_t + 1/d_t)
+or_low <- exp(log(or) - 1.96 * seOR)
+or_upr <- exp(log(or) + 1.96 * seOR)
+```
+
+Końce przedziałów ufności dla ilorazu szans (ocena punktowa `r or`) wynoszą: 
+[`r or_low`; `r or_upr`] zaś dla
+ryzyka względnego (ocena punktowa `r rr`) przedział ufności wynosi [`r rr_low`; `r rr_upr`].
+
+**Uwaga**: nie jest specjalnie istotne jaka jest konkretna formuła obliczania
+przedziałów ufności, przecież obliczenia i tak koniec-końców wykona
+program komputerowy.
+
+Przedział ufności dla ilorazu szans nie zawiera 1; 
+zatem branie witaminy C zmniejsza szanse na zachorowanie;
 albo zwiększa na niezachorowanie od $1/25 = 4$ do $1/0,9 = 1,1$. Żeby
 to zabrzmiało ładnie i po polsku. 
 Zwiększa na niezachorowanie od 300% do 10%.
 
+Dlaczego taka znacząca rozpiętość? Bo próba jest względnie mała. Gdyby
+Pauling zwerbował nie 280 a 2800 narciarzy mógłby weryfikować działanie
+swojej witaminy z większą pewnością.
 
-### Tabele korelacyjne 
+### Tabele wielodzielcze
 
-Łączny rozkład dwóch (dwudzielna) lub większej
-(wielodzielna albo wielodzielcza) liczby zmiennych można przedstawić
-w tabeli (zwanej
-także korelacyjną). W języku angielskim tego typu 
-tabele noszą nazwę **two-way tables** albo **contingency tables**.
+Łączny rozkład dwóch lub większej liczby zmiennych można przedstawić
+w tabeli. Taka tabela nazywa się dwudzielcza (dla dwóch zmiennych)
+lub wielodzielcza albo wielodzielna (dla więcej niż dwóch liczby zmiennych.) 
+Inne nazwy tych tabel to krzyżowe albo kontyngencji
+(cross-tabulation, contingency **two-way tables**.)
 
-Ograniczmy się do tabel dwudzielnych, których ,,teorię'' przedstawimy na
-prostym przykładzie: dla pewnej grupy osób odnotowujemy ich status-społeczno-ekonomiczny
-(wysoki/**high**, średni/**middle**, niski/**low**)
-oraz status-względem-palenia 
-(wartości: pali/**current**, palił-nie-pali/**former**, nigdy-nie-palił/**never**). 
-
-Uwaga: status-społeczno-ekonomiczny to powiedzmy miara prestiżu używana w socjologii
-(można na Wikipedii doczytać co to dokładnie jest)
-
-Obie zmienne są nominalne, obie mają po trzy wartości. Można
-poklasyfikować wszystkich badanych w następujący sposób:
-
-```{r message=FALSE, echo=F}
-smokerData <- read.csv(file='smoker.csv',sep=';',header=T)
-#summary(smokerData)
-#nrow(smokerData)
-#
-smoke <- table(smokerData)
-#smoke
-## rozkłady brzegowe
-#margin.table(smoke,1)
-#margin.table(smoke,2)
-
-smoke.table <- addmargins(smoke)
-kable(smoke.table)
-```
-
-Nieświadomie skonstruowaliśmy pierwszą tabelę korelacyjną.
-Taka tabela składa się z wierszy i kolumn. Dolny wiersz (Sum czyli Razem
-po polsku) zawiera łączną liczebność dla wszystkich wierszy w danej kolumnie. Podobnie prawa skrajna kolumna zawiera łączną
-liczebność dla wszystkich kolumn dla danego wiersza. Dolny wiersz/Prawą
-kolumnę nazywamy **rozkładami brzegowymi**.
-Pozostałe kolumny/wiersze (ale bez wartości łącznych) nazywane
-są **rozkładami warunkowymi**.
-
-Przy warunku że osoba miała status SES równy high, 51 takich osób
-paliło, 92 kiedyś paliły a 68 nigdy nie paliły. Albo:
-Przy warunku że osoba nigdy nie paliła (never), 68 takich
-osób miało status high, 22 low a 9 middle.
-
-Tabelę korelacyjną  można także przedstawiać jako **udziały** (%):
-
-
-```{r message=FALSE, echo=F}
-total <- sum(smoke)
-smoke.p <- smoke/total *100
-##smoke.p
-## rozkłady brzegowe
-##margin.table(smoke,1)/total * 100
-##margin.table(smoke,2)/total * 100
-##
-smoke.table.p <- addmargins(smoke.p)
-kable(smoke.table.p)
-```
+Ograniczmy się do analizy tabel dwudzielnych.
 
 **Przykład: Narciarze Paulinga jeszcze raz**
 
-Eksperyment Paulinga można przedstawić w postaci tablicy korelacyjnej
+Eksperyment Paulinga można przedstawić w postaci tablicy dwudzielczej
 (P/C oznacza czy narciarz zażywał witaminę czy placebo; cold/nocold
 czy zachorował czy nie zachorował na katar):
 
@@ -1978,82 +2062,110 @@ narciarze.table <- addmargins(narciarze)
 kable(narciarze.table, col.names = c('nocold', 'cold', 'razem'))
 ```
 
+Taka tabela składa się z wierszy i kolumn. Dolny wiersz (Sum czyli Razem
+po polsku) zawiera łączną liczebność dla wszystkich wierszy w danej kolumnie. Podobnie prawa skrajna kolumna zawiera łączną
+liczebność dla wszystkich kolumn dla danego wiersza. Dolny wiersz/Prawą
+kolumnę nazywamy **rozkładami brzegowymi**.
+Pozostałe kolumny/wiersze (ale bez wartości łącznych) nazywane
+są **rozkładami warunkowymi**. Rozkładów warunkowych jest tyle ile
+wynosi iloczyn $r \times c$ gdzie $r$ to liczba wariantów jednej cechy
+a $c$ to liczba wariantów drugiej cechy.
 
-**Rozkład brzegowy**:
-Zachorował/nie zachorował (48 vs 231 albo 48/231=20,8% spośród 279
-narciarzy zachorowało na katar). Takie **coś** przypominam
-nazywamy **szansą**. Szansa zachorowania na katar wynosi
-0,208 albo jeden do 4,8
+Przy warunku że narciarz brał witaminę C, `r narciarze[1,1]` takich osób
+nie zachorowało (**nocold**) a `r narciarze[1,2]` zachorowało (**cold**). 
+Drugi rozkład warunkowy: `r narciarze[2,1]` narciarzy, którzy brali placebo
+nie zachorowało, a `r narciarze[2,2]` zachorowało. Są także rozkłady
+warunkowe dla drugiej cechy. W grupie narciarzy, którzy zachorowali
+`r narciarze[1,1]` brało witaminę C, a `r narciarze[2,1]` brało placebo.
+Wreszcie w grupie narciarzy, którzy nie zachorowali
+`r narciarze[2,1]` brało witaminę C, a `r narciarze[2,2]` brało placebo.
+Rozkładów warunkowych jest 4 bo obie cechy mają po dwa warianty. Jest
+to najmniejsza możliwa tabela wielodzielcza.
 
-Nasze rozumowanie jest takie że jeżeli branie witaminy C nie ma wpływu
-na katar to zarówno ci narciarze co brali C jak i ci narciarze co 
-brali P powinni mieć jednakowe szanse na zachorowanie. 
-Te szanse można
-obliczyć na podstawie **rozkładów warunkowych**
+Zamiast liczebności można posługiwać się odsetkami (procentami):
 
-Dwa **rozkłady warunkowe**:
 
-Brał P→zachorował: 31 vs 109 albo 
-31/(31+109)=0,2214. 
-Interpretacja: 22,14% tych którzy brali placebo
-zachorowało.
+```{r}
+narciarze.total <- sum(narciarze)
+narciarze.p <- narciarze/narciarze.total *100
 
-Brał C→zachorował: 17 vs 122 albo
-17/(17+122.0) = 0.1223. 
-Interpretacja: 12,23% tych którzy brali witaminę C zachorowało.
+narciarze.table.p <- addmargins(narciarze.p)
+kable(narciarze.table.p)
+```
 
-Zatem mamy rozbieżność powinno być 48/231 = 20,8% a jest 22,14% dla tych co
-brali P (czyli więcej) oraz 12,23% dla tych co brali C.
+Narciarzy którzy brali witaminę C nie nie zachorowali stanowi `r  narciarze.table.p[1,1]`%
+wszystkich narciarzy. Mało przydatne...
 
-Na oko księgowego witamina C działa (bo jest różnica), ale dla statystyka
-liczy się czy ta różnica jest na tyle duża, że (z założonym
-prawdopodobieństwem) można wykluczyć działanie przypadku.
+Ciekawsze jest obliczenie procentów każdego wiersza osobno, tj. dzielimy
+liczebności w każdej kolumnie przez liczebności rozkładu brzegowego (wartości
+ostatniej kolumny):
 
-Rozumowanie jest następujące: jeżeli prawdopodobieństwo wystąpienia
-tak dużej różnicy jest małe, to cechy **nie są niezależne**.
-Jest to **istota** i jedyny wniosek z czegoś co się nazywa **testem
-istotności-chi-kwadrat**. Test chi-kwadrat porównuje
-liczebności **tablicy korelacyjnej** z idealną-tablicą-korelacyjną,
-która zakłada niezależność jednej zmiennej od drugiej.
+```{r}
 
-Można udowodnić że taka tablica powstanie przez przemnożenie
-dla każdego elementu tablicy odpowiadających 
-mu wartości brzegowych a następnie podzieleniu tego przez łączną liczebność:
+narciarze.p <- proportions(narciarze, margin = 1)
+narciarze.p.m <- addmargins(narciarze.p, margin = 1)
+n.m <- margin.table(narciarze,2) /narciarze.total
+narciarze.x <- cbind(rbind(narciarze.p, n.m), c(1,1,1)) * 100
+kable(narciarze.x)
+```
+
+Otrzymaliśmy ryzyka zachorowania na katar (lub nie zachorowania). Ryzyko
+zachorowania dla całej grupy wynosi `r narciarze.x[3,2]`% a nie zachorowania
+`r narciarze.x[3,1]`%. Jest przyznajmy całkiem **zdroworozsądkowym założeniem**
+(uczenie hipotezą statystyczną), że jeżeli przyjmowanie witaminy nie ma związku
+z zachorowaniem lub nie na katar, to w grupie tych co brali i tych co nie brali
+powinniśmy mieć identyczne rozkłady warunkowe równe rozkładowi brzegowemu.
+Czyli powinno przykładowo zachorować `r  narciarze.x[3,2]`% narciarzy, którzy
+brali witaminę C a widzimy , że zachorowało jedynie `r narciarze.x[1,2]`%.
+
+Na oko księgowego witamina C działa (bo są różnice), ale dla statystyka liczy się 
+czy ta różnica jest na tyle duża, że (z założonym prawdopodobieństwem) 
+można wykluczyć działanie przypadku.
+
+Rozumowanie jest następujące: jeżeli prawdopodobieństwo wystąpienia 
+tak dużej różnicy jest małe, to cechy nie są niezależne. 
+Jest to istota i jedyny wniosek z czegoś co się nazywa 
+testem istotności-chi-kwadrat. 
+Test chi-kwadrat porównuje liczebności tablicy wielodzielnej z idealną-tablicą-wielodzielną, która zakłada niezależność jednej zmiennej od drugiej.
+
+Można udowodnić, że taka tablica powstanie przez przemnożenie dla 
+każdego elementu tablicy odpowiadających mu wartości brzegowych 
+a następnie podzieleniu tego przez łączną liczebność (czyli przykładowo pierwszy
+element poniższej tablicy to `r narciarze.table[3,1]` pomnożone przez
+`r narciarze.table[1,3]` i podzielone przez `r narciarze.table[3,3]`; proszę
+sprawdzić,
+że jest to `r narciarze.table[3,1] * narciarze.table[1,3] / narciarze.table[3,3]`):
 
 
 ```{r, message=FALSE, echo=FALSE}
 chi_skiers <- chisq.test(narciarze)
 narciarze.expected <- chi_skiers$expected
 narciarze.ex.table <- addmargins(narciarze.expected)
+
+chipv <- chi_skiers$p.value
+chipv.txt <- sprintf("%f", chipv)
 kable(narciarze.ex.table)
 ```
 
-czyli dla pierwszego elementu było to: 139 * 231 / 279 = 115,086. Proszę
+Proszę
 zwrócić uwagę że **rozkłady brzegowe** są identyczne, identyczna
-jest też łączna liczebność. Różnią się tylko rozkłady warunkowe.
+jest też łączna liczebność. Różnią się tylko rozkłady warunkowe (które nie są
+liczbami całkowitami ale tak ma być--nie jest to błąd)
 
-W przypadku tablicy Paulinga wykonanie testu da w wyniku:
-
-```{r message=FALSE, echo=F}
-##chi_skiers$statistic
-chipv <- chi_skiers$p.value
-sprintf("%f", chipv)
-```
-
-powyższe `r chipv` oznacz że wystąpienie tak dużych różnic
-pomiędzy **oczekiwanymi** przy założeniu o niezależności zmiennych
+Za pomocą testu Chi-kwadrat obliczamy jakie jest prawdopodobieństwo, wystąpienia
+tak dużych lub większych różnic. Wynosi ono `r chipv.txt`.
+Czyli wystąpienie tak dużych różnic
+pomiędzy **oczekiwanymi** (przy założeniu o niezależności zmiennych)
 liczebnościami
-a obserwowanymi  liczebnościami zdarza się około 4 razy na 100.
-Formalnie `r chipv` to prawdopodobieństwo oczywiście.
+a obserwowanymi liczebnościami zdarza się około 4 razy na 100.
 
-Przypominam ideę testu: jeżeli prawdopodobieństwo zaobserwowanych
-różnic jest małe to albo zakładamy że 
+Jeszcze raz przypominamy ideę testu: jeżeli prawdopodobieństwo zaobserwowanych
+różnic jest małe to zakładamy że 
 
 * albo mamy pecha i pięć razy podrzucając monetą zawsze nam spadła
 reszka (prawdopodobieństwo około 0,03), albo
 
-* albo że założenie co do niezależności jest fałszywe. 
-
+* że założenie co do niezależności jest fałszywe. 
 
 Statystyk zawsze wybierze
 drugie. Pozostaje tylko ustalenie co to znaczy **małe**.
@@ -2063,16 +2175,71 @@ przez statystyka. Zwykle jest to 0,05 lub 0,01 (czasami 0,1)
 co oznacza że odrzucając założenie o braku związku pomiędzy
 katarem a braniem witaminy C pomylimy się pięć lub raz na 100.
 
-**W statystyce nie ma wyników ze 100% pewnością** Statystyk **zawsze** musi przyjąć prawdopodobieństwo popełnienia błędu zwane 
-**poziomem istotności** (w sensie, że zaobserwowane wielkości -- w tym
-przypadku odchyleń -- są
-**istotnie** różne od przypadkowych).
+**Uwaga**: proszę zwrócić uwagę że wniosek z testu niezależności jest
+słabszy niż z porówania ryzyk. Tam mamy informację że zależność istnieje 
+i oszacowaną jej wielkość (np. za pomocą ryzyka względnego) tutaj tylko
+zweryfikowaliśmy fakt czy obie zmienne są niezależne czy też nie.
 
-Zatem w tym konkretnym przypadku:
-na poziomie istotności 0,05 hipotezę o niezależności
-cech należy odrzucić ale na poziomie 0,01 już nie. 
-(Dlaczego?)
+**Przykład: palenie a status społeczno-ekonomiczny**
 
+Dla pewnej grupy osób odnotowujemy ich status-społeczno-ekonomiczny
+(wysoki/**high**, średni/**middle**, niski/**low**)
+oraz status-względem-palenia 
+(wartości: pali/**current**, palił-nie-pali/**former**, nigdy-nie-palił/**never**). 
+Obie zmienne są nominalne, obie mają po trzy wartości. Można
+poklasyfikować wszystkich badanych w następujący sposób:
+
+```{r message=FALSE, echo=F}
+smokerData <- read.csv(file='smoker.csv',sep=';',header=T)
+#summary(smokerData)
+#nrow(smokerData)
+#
+smoke <- table(smokerData)
+
+smoke.table <- addmargins(smoke)
+kable(smoke.table)
+```
+
+Uwaga: status-społeczno-ekonomiczny to powiedzmy miara prestiżu używana w socjologii
+(można na Wikipedii doczytać co to dokładnie jest)
+
+Tym razem tabela składa się z 3 wierszy i 3 kolumn (ostatni wiersz/kolumna się
+nie liczą bo to sumy--rozkłady brzegowe)
+
+Przedstawmy tą tabelę w postaci udziałow procentowych sumujących się
+dla każdego wiersza osobno do 100% (tj. dzielimy
+liczebności w każdej kolumnie przez liczebności rozkładu brzegowego (wartości
+ostatniej kolumny):
+
+```{r}
+smoke.total <- sum(smoke)
+smoke.p <- proportions(smoke, margin = 1)
+smoke.p.m <- addmargins(smoke.p, margin = 1)
+n.m <- margin.table(smoke,2) /smoke.total
+smoke.x <- cbind(rbind(smoke.p, n.m), c(1,1,1)) * 100
+kable(smoke.x)
+```
+
+Rozumowanie jest identyczne jak dla narciarzy Pauliga. Jeżeli nie ma zależności
+pomiędzy paleniem a statusem to procenty w ostatnim wierszu powinny
+być identyczne jak w wierszach 1--3 (nagłówka nie liczymy). Tym idealnym 
+procentom odpowiadają następujące liczebności:
+
+
+```{r, message=FALSE, echo=FALSE}
+chi_smokers <- chisq.test(smoke)
+smokers.expected <- chi_smokers$expected
+smokers.ex.table <- addmargins(smokers.expected)
+
+chipv <- chi_smokers$p.value
+chipv.txt <- sprintf("%f", chipv)
+kable(smokers.ex.table)
+```
+
+Wartość prawdopodobieństwa dla testu chi-kwadrat określająca, że przy założeniu niezależności obu zmiennych tak duża różnica między liczebnościami rzeczywistymi a idealnymi 
+(porównaj stosowne tabele wyżej) jest dziełem przypadku wynosi `r chipv.txt`.
+Jest to prawdopodobieństwo tak małe, że statystyk odrzuca założenie o niezależności
+statusu i palenia (myląc się w przybliżeniu `r chipv.txt` ≈ raz na tysiąc)
 
 ## Zmienna liczbowa i zmienna nominalna
 
@@ -4958,7 +5125,7 @@ pojawia się nowa zmienna `s2p`
 W podobny łatwy sposób przekodowujemy `s3` oraz `zo1`, `zo2`, `zo3`
 
 **Uwaga**: polecenie `IF` wpisujemy używając dużych liter. Słowo
-`$source` wpisujemy tak jak jest to zadomonstrowane (`$Source` jest błędem.)
+`$source` wpisujemy tak jak jest to zademonstrowane (`$Source` jest błędem.)
 
 Przekodowanie pytanie z możliwością wielokrotnego wyboru jest równie
 proste tyle że pisania jest więcej. Zmienna `wiedza_na_temat_palenia` może zawierać
@@ -5122,7 +5289,7 @@ pomiędzy zmiennymi nominalnymi `zamiarOklasa` oraz `staz.klasa` przedstawia rys
 ![](./tabele_krzyzowe.png)
 
 
-### Analiza zależności: zmienna-liczbowa/zmienna nominalna
+### Analiza zależności: zmienna liczbowa/zmienna nominalna
 
 Wybieramy `Analizy`→`Testy t`→`Test t dla prób niezależnych` i/lub
 `Analizy`→`ANOVA`→`Jednoczynnikowa ANOVA`.
@@ -5133,7 +5300,7 @@ co trzeba. Wynik automagicznie pojawia się w lewym oknie.
 
 ![](./testy.png)
 
-### Analiza zależności: zmienna-liczbowa/zmienna liczbowa
+### Analiza zależności: zmienna liczbowa/zmienna liczbowa lub nominalna
  
 Wybieramy `Analizy`→`Regresja`→`Regresja liniowa`
 

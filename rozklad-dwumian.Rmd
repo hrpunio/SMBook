@@ -1,0 +1,107 @@
+---
+title: "Tabele wielodzielcze"
+author:
+- name: Tomasz Przechlewski
+  email: t.plata-przechlewski@psw.kwidzyn.edu.pl
+  affiliation: Powiślańska Szkoła Wyższa (Kwidzyn/Poland)
+date: "Niedatowany/wersja robocza"
+output:
+  html_document: default
+  pdf_document: 
+    latex_engine: xelatex
+subtitle: Podręcznik dla studentów wydziałów nauk o zdrowiu
+description: (c) Tomasz Przechlewski / CC-BY license
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F, warning = F )
+
+## https://pogotowiestatystyczne.pl/jak-analizowac-wyniki-badan-przy-uzyciu-ankiety-wlasnego-autorstwa/
+##
+library("knitr")
+library("ggplot2")
+library("tidyverse")
+library("ggpubr")
+
+
+sample.size <- 1000
+
+## oblicza średnią
+mks <- function  (n, maxN) {
+  ## w is global
+  sample <- rep(0, sample.size)
+  for(i in 1:sample.size) {
+    s <- floor(runif(n, min=0, max=maxN))
+    sample[i] <- mean(w[s])
+  }
+  return (sample)
+}
+
+r <- read.csv("kandydaci_ws_2018_4.csv", sep = ';', dec = ",",  header=T, na.string="NA") %>%
+    mutate (plec = recode(plec, "K"=1, "M"=0))
+
+p.k <- mean(r$plec)
+
+```
+
+
+Dane dotyczące kandydatów zawierają także płeć. Ktoś może być ciekaw
+jaki był odsetek kobiet w tej grupie. Taki parametr nazywa się proporcją
+albo ryzykiem, a potocznie i niefachowo procentem. 
+Matematycznym modelem jest **zmienna dwuwartościowa**, która
+z określonym prawdopodobieństwem przyjmuje wartość `kobieta`. 
+Obliczmy
+empiryczną wartość tego prawdopodobieństwa jako liczbę kobiet do liczby
+wszystkich kandydatów. Wartość tego parametru wynosi `r p.k` (albo 
+`r round(p.k *100, 2)`%). 
+Potraktujmy to jako prawdziwą wartość prawdopodobieństwa (p), że
+kandydat jest kobietą i empirycznie sprawdźmy czy możemy szacować
+o prawdziwej wartości tego parametru 
+używając (jako estymatora żeby się przyzwyczajac do nowych terminów) proporcję z próby.
+Tradycyjnie powtarzamy eksperyment 1000 razy dla trzech różnych wielkości próby.
+
+```{r}
+w <- as.vector(na.omit(r$plec))
+wN <- length(w)
+
+x020 <-mks(20,wN)
+summary(x020)
+
+
+x120 <-mks(120,wN)
+summary(x120)
+
+x420 <-mks(420,wN)
+summary(x420)
+
+all.samples <- data.frame(x020, x120, x420)
+
+p1 <- all.samples %>%
+  pivot_longer(cols = c(x020, x120, x420), names_to = 'k', values_to = 'v') %>%
+  ggplot(aes(x=v)) +
+  facet_wrap(~ k) +
+  geom_histogram(binwidth=.02, fill="steelblue") +
+  geom_vline(xintercept = p.k, colour="forestgreen", size=.4) +
+  ggtitle("rozkład wielkości p dla różnej wielkości próby")
+p1
+
+```
+
+Wnioski: 
+
+* Dla próby 20 elementowej rozkład nie przypomina rozkładu normalnego
+
+* Dla prób 120 i 420 elementowej rozkład jest podobny do normalnego
+
+* Zmienność estymatora maleje wraz ze wzrostem próby; każe nam to przypuszczać
+(i tak jest w istocie) że jest on zgodny
+
+* W każdym przypadku średnia z 100 eksperymentów jest zbliżona do wartości prawdziwej
+ każe nam to przypuszczać (i tak jest w istocie) że estymator jest nieobciążony
+ 
+Rozkład normalny jest tak magiczny że nawet jeżeli zmienna której parametr
+szacujemy nie ma rozkładu zbliżonego
+do normalnego (jak w przypadku zmiennej która przyjmuje tylko dwie wartości)
+to i tak estymator tego parametru będzie normalny. Co najwyżej będziemy
+potrzebowali większej próby żeby znormalniał (jak w opisywanym przykładzie)
+ 
